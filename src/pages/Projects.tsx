@@ -47,7 +47,7 @@ const Projects = () => {
         {/* Heading */}
         <div className="relative mb-16">
           <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none">
-            WORK
+            WORKS
           </span>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -56,7 +56,7 @@ const Projects = () => {
             className="relative z-10"
           >
             <h1 className="font-display text-6xl md:text-8xl">
-              SELECTED WORK<span className="text-primary">.</span>
+              WORKS<span className="text-primary">.</span>
             </h1>
             <div className="inline-block brutalist-border px-3 py-1 mt-4">
               <span className="font-mono-custom text-xs uppercase tracking-widest">Major Projects 2023–2025</span>

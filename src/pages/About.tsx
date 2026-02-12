@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Award, BookOpen, Brain, Code, Database, BarChart3, Monitor, Users, Bot, FileCode2, Container, GitBranch, Paintbrush, Wind, Terminal, Globe, MessageSquare, Lightbulb, Handshake, RefreshCw, Ear } from "lucide-react";
+import { ExternalLink, Award, BookOpen } from "lucide-react";
 
 const skills = [
   "Transformers", "Generative AI", "LLMs", "CrewAI", "Gemini API",
@@ -15,61 +15,55 @@ const stats = [
 const skillCategories = [
   {
     title: "AI & ML",
-    icon: Brain,
     skills: [
-      { name: "Generative AI", icon: Bot },
-      { name: "LLMs", icon: MessageSquare },
-      { name: "BERT Models", icon: FileCode2 },
-      { name: "RAG Systems", icon: Database },
+      { name: "Generative AI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
+      { name: "LLMs", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" },
+      { name: "BERT Models", logo: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg" },
+      { name: "RAG Systems", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" },
     ],
   },
   {
     title: "Programming",
-    icon: Code,
     skills: [
-      { name: "Python", icon: Terminal },
-      { name: "TypeScript", icon: FileCode2 },
+      { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+      { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
     ],
   },
   {
     title: "Frameworks",
-    icon: Container,
     skills: [
-      { name: "NestJS", icon: Globe },
-      { name: "FastAPI", icon: Wind },
-      { name: "Docker", icon: Container },
-      { name: "Git", icon: GitBranch },
-      { name: "Bootstrap Studio", icon: Paintbrush },
+      { name: "NestJS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg" },
+      { name: "FastAPI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" },
+      { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+      { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+      { name: "Bootstrap Studio", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" },
     ],
   },
   {
     title: "Data & Analytics",
-    icon: BarChart3,
     skills: [
-      { name: "Pandas", icon: Database },
-      { name: "Matplotlib", icon: BarChart3 },
-      { name: "Power BI", icon: BarChart3 },
+      { name: "Pandas", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" },
+      { name: "Matplotlib", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" },
+      { name: "Power BI", logo: "https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg" },
     ],
   },
   {
     title: "Platforms",
-    icon: Monitor,
     skills: [
-      { name: "Windows", icon: Monitor },
-      { name: "Linux (Ubuntu)", icon: Terminal },
-      { name: "VS Code", icon: Code },
-      { name: "WordPress", icon: Globe },
+      { name: "Windows", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows11/windows11-original.svg" },
+      { name: "Linux (Ubuntu)", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ubuntu/ubuntu-original.svg" },
+      { name: "VS Code", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+      { name: "WordPress", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg" },
     ],
   },
   {
     title: "Soft Skills",
-    icon: Users,
     skills: [
-      { name: "Communication", icon: MessageSquare },
-      { name: "Problem-solving", icon: Lightbulb },
-      { name: "Teamwork", icon: Handshake },
-      { name: "Adaptability", icon: RefreshCw },
-      { name: "Active Listening", icon: Ear },
+      { name: "Communication", logo: "" },
+      { name: "Problem-solving", logo: "" },
+      { name: "Teamwork", logo: "" },
+      { name: "Adaptability", logo: "" },
+      { name: "Active Listening", logo: "" },
     ],
   },
 ];
@@ -100,12 +94,33 @@ const About = () => {
           </motion.h1>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex justify-center lg:justify-start"
+          >
+            <div className="brutalist-border-thick w-full max-w-xs h-96 bg-muted overflow-hidden" style={{ transform: "rotate(-2deg)" }}>
+              <img
+                src="/profile-photo.jpg"
+                alt="Karthik Surya"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="font-display text-8xl text-primary/30">KS</span></div>';
+                }}
+              />
+            </div>
+          </motion.div>
+
           {/* Bio */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="lg:col-span-2"
           >
             <div className="brutalist-border-thick p-6 md:p-8">
               <div className="inline-block brutalist-border px-3 py-1 mb-6">
@@ -134,29 +149,29 @@ const About = () => {
               </div>
             </div>
           </motion.div>
-
-          {/* Stats */}
-          <div className="flex flex-col gap-6 justify-center">
-            {stats.map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
-                className="brutalist-border-thick p-6 md:p-8 bg-background hover:bg-primary/5 transition-colors"
-                style={{ transform: `rotate(${stat.rotate})` }}
-              >
-                <div className="flex items-baseline gap-4">
-                  <span className="font-display text-5xl md:text-7xl text-primary">{stat.value}</span>
-                  <span className="font-mono-custom text-xs md:text-sm uppercase tracking-widest text-muted-foreground">{stat.label}</span>
-                </div>
-                <div className="mt-3 h-1 w-16 bg-primary" />
-              </motion.div>
-            ))}
-          </div>
         </div>
 
-        {/* ─── TECHNICAL SKILLS ─── */}
+        {/* Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
+              className="brutalist-border-thick p-6 md:p-8 bg-background hover:bg-primary/5 transition-colors"
+              style={{ transform: `rotate(${stat.rotate})` }}
+            >
+              <div className="flex items-baseline gap-4">
+                <span className="font-display text-5xl md:text-7xl text-primary">{stat.value}</span>
+                <span className="font-mono-custom text-xs md:text-sm uppercase tracking-widest text-muted-foreground">{stat.label}</span>
+              </div>
+              <div className="mt-3 h-1 w-16 bg-primary" />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ─── STACK ─── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -164,7 +179,7 @@ const About = () => {
           className="mt-24"
         >
           <h2 className="font-display text-4xl md:text-6xl mb-10">
-            TECHNICAL SKILLS<span className="text-primary">.</span>
+            STACK<span className="text-primary">.</span>
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 brutalist-border-thick">
@@ -178,7 +193,6 @@ const About = () => {
               >
                 {/* Category Header */}
                 <div className="bg-primary text-primary-foreground px-4 py-2 mb-6 inline-flex items-center gap-2">
-                  <category.icon size={18} />
                   <h3 className="font-display text-xl md:text-2xl">{category.title}</h3>
                 </div>
 
@@ -186,7 +200,11 @@ const About = () => {
                 <ul className="space-y-3">
                   {category.skills.map((skill) => (
                     <li key={skill.name} className="flex items-center gap-3">
-                      <skill.icon size={14} className="text-primary flex-shrink-0" />
+                      {skill.logo ? (
+                        <img src={skill.logo} alt={skill.name} className="w-5 h-5 flex-shrink-0" />
+                      ) : (
+                        <span className="w-2 h-2 bg-primary flex-shrink-0" />
+                      )}
                       <span className="font-mono-custom text-sm">{skill.name}</span>
                     </li>
                   ))}
