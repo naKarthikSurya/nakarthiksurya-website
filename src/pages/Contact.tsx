@@ -367,7 +367,7 @@ const Contact = () => {
               { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/karthiksurya-na" },
               { icon: Github, label: "GitHub", href: "https://github.com/nakarthiksurya" },
               { icon: Mail, label: "Email", href: "mailto:n.a.karthiksurya@gmail.com" },
-              { icon: Download, label: "Resume", href: "/resume.pdf" },
+              { icon: Download, label: "Resume", href: "/suryaresume.pdf" },
             ].map((social, i) => (
               <motion.a
                 key={i}
