@@ -215,8 +215,7 @@ const About = () => {
                                 <img
                                   src={skill.logo}
                                   alt={`${skill.name} icon`}
-                                  className="h-4 w-4 object-contain opacity-90 group-hover:brightness-0 group-hover:invert transition-all"
-                                  loading="lazy"
+                                  className="h-5 w-5 object-contain opacity-90 group-hover:grayscale group-hover:invert transition-all rounded-sm p-[1px] transform translate-z-0"
                                 />
                               ) : Icon ? (
                                 <Icon className="h-4 w-4 text-primary group-hover:text-primary-foreground transition-colors" aria-hidden />
@@ -230,14 +229,6 @@ const About = () => {
                           );
                         })}
                       </motion.div>
-                      <div
-                        className="pointer-events-none absolute inset-y-0 left-0 w-14 md:w-28"
-                        style={{ background: "linear-gradient(to right, hsl(var(--muted)) 0%, transparent 100%)" }}
-                      />
-                      <div
-                        className="pointer-events-none absolute inset-y-0 right-0 w-14 md:w-28"
-                        style={{ background: "linear-gradient(to left, hsl(var(--muted)) 0%, transparent 100%)" }}
-                      />
                     </div>
                   ))}
                 </div>

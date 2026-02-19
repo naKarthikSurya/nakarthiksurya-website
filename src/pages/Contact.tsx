@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Linkedin, Github, Download, Send, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Github, Download, Send, ArrowUpRight, ShieldCheck } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Seo from "@/components/Seo";
 
@@ -16,11 +16,11 @@ type BrevoPayload = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const escapeHtml = (unsafe: string) =>
   unsafe
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 const formatSubmittedAt = () =>
   new Intl.DateTimeFormat("en-IN", {
     dateStyle: "medium",
@@ -87,12 +87,46 @@ const buildUserTemplate = (safeName: string, safeMessage: string, submittedAt: s
 
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({ name: "", email: "", message: "", website: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", website: "", _subject_line: "" });
   const [loading, setLoading] = useState(false);
+  const [captcha, setCaptcha] = useState({ question: "", answer: 0 });
+  const [captchaInput, setCaptchaInput] = useState("");
+  const [loadTime] = useState(Date.now());
+  const [errors, setErrors] = useState({ email: "", message: "", captcha: "" });
+
   const contactEndpoint = import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact";
   const brevoApiKey = import.meta.env.VITE_BREVO_API_KEY;
   const brevoToEmail = import.meta.env.VITE_CONTACT_TO_EMAIL;
   const brevoFromEmail = import.meta.env.VITE_CONTACT_FROM_EMAIL;
+
+  useEffect(() => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    setCaptcha({ question: `${num1} + ${num2}`, answer: num1 + num2 });
+  }, []);
+
+  const validateField = (name: string, value: string) => {
+    if (name === "email") {
+      if (value && !EMAIL_PATTERN.test(value)) {
+        setErrors(prev => ({ ...prev, email: "Please enter a valid email address." }));
+      } else {
+        setErrors(prev => ({ ...prev, email: "" }));
+      }
+    }
+    if (name === "message") {
+      if (value && value.trim().length < 20) {
+        setErrors(prev => ({ ...prev, message: "Message must be at least 20 characters." }));
+      } else {
+        setErrors(prev => ({ ...prev, message: "" }));
+      }
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    validateField(name, value);
+  };
 
   const parseJsonSafely = async (response: Response): Promise<ContactApiResponse | null> => {
     const raw = await response.text();
@@ -171,9 +205,18 @@ const Contact = () => {
     e.preventDefault();
 
     // Honeypot spam trap
-    if (formData.website.trim()) {
+    if (formData.website.trim() || formData._subject_line.trim()) {
       toast({ title: "Message Sent!", description: "Thank you for reaching out. I'll get back to you soon." });
-      setFormData({ name: "", email: "", message: "", website: "" });
+      setFormData({ name: "", email: "", message: "", website: "", _subject_line: "" });
+      setCaptchaInput("");
+      return;
+    }
+
+    // Time-based trap (if less than 3 seconds, likely a bot)
+    if (Date.now() - loadTime < 3000) {
+      toast({ title: "Message Sent!", description: "Thank you for reaching out. I'll get back to you soon." });
+      setFormData({ name: "", email: "", message: "", website: "", _subject_line: "" });
+      setCaptchaInput("");
       return;
     }
 
@@ -185,12 +228,25 @@ const Contact = () => {
       toast({ title: "Error", description: "Please fill in all fields.", variant: "destructive" });
       return;
     }
+
     if (!EMAIL_PATTERN.test(trimmedEmail)) {
-      toast({ title: "Error", description: "Please enter a valid email address.", variant: "destructive" });
+      setErrors(prev => ({ ...prev, email: "Please enter a valid email address." }));
+      return;
+    }
+
+    if (trimmedMessage.length < 20) {
+      setErrors(prev => ({ ...prev, message: "Message must be at least 20 characters." }));
+      return;
+    }
+
+    if (parseInt(captchaInput) !== captcha.answer) {
+      setErrors(prev => ({ ...prev, captcha: "Incorrect verification answer." }));
       return;
     }
 
     setLoading(true);
+    setErrors({ email: "", message: "", captcha: "" });
+
     try {
       if (brevoApiKey && brevoToEmail && brevoFromEmail) {
         await sendViaBrevoDirect(trimmedName, trimmedEmail, trimmedMessage);
@@ -219,7 +275,11 @@ const Contact = () => {
       }
 
       toast({ title: "Message Sent!", description: "Thank you for reaching out. I'll get back to you soon." });
-      setFormData({ name: "", email: "", message: "", website: "" });
+      setFormData({ name: "", email: "", message: "", website: "", _subject_line: "" });
+      setCaptchaInput("");
+      const num1 = Math.floor(Math.random() * 10) + 1;
+      const num2 = Math.floor(Math.random() * 10) + 1;
+      setCaptcha({ question: `${num1} + ${num2}`, answer: num1 + num2 });
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to send message.";
       toast({ title: "Error", description: message, variant: "destructive" });
@@ -297,8 +357,9 @@ const Contact = () => {
                       </label>
                       <input
                         type="text"
+                        name="name"
                         value={formData.name}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                        onChange={handleInputChange}
                         className="w-full border-b-[3px] border-foreground bg-transparent p-3 font-body text-sm focus:outline-none focus:border-primary transition-colors"
                         placeholder="John Doe"
                         maxLength={100}
@@ -310,38 +371,107 @@ const Contact = () => {
                       </label>
                       <input
                         type="email"
+                        name="email"
                         value={formData.email}
-                        onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                        className="w-full border-b-[3px] border-foreground bg-transparent p-3 font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                        onChange={handleInputChange}
+                        className={`w-full border-b-[3px] bg-transparent p-3 font-body text-sm focus:outline-none transition-colors ${
+                          errors.email ? "border-destructive focus:border-destructive" : "border-foreground focus:border-primary"
+                        }`}
                         placeholder="john@example.com"
                         maxLength={255}
                       />
+                      {errors.email && (
+                        <p className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div>
-                    <label className="font-mono-custom text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-3">
-                      Your Message
-                    </label>
+                    <div className="flex justify-between items-end mb-3">
+                      <label className="font-mono-custom text-[10px] uppercase tracking-[0.2em] text-muted-foreground block">
+                        Your Message
+                      </label>
+                      <span className={`font-mono-custom text-[10px] uppercase tracking-wider ${
+                        formData.message.length < 20 ? "text-destructive" : "text-muted-foreground"
+                      }`}>
+                        {formData.message.length} / 1000
+                      </span>
+                    </div>
                     <textarea
+                      name="message"
                       value={formData.message}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
-                      className="w-full border-b-[3px] border-foreground bg-transparent p-3 font-body text-sm focus:outline-none focus:border-primary transition-colors min-h-[180px] resize-y"
-                      placeholder="Tell me about your project, idea, or just say hello..."
+                      onChange={handleInputChange}
+                      className={`w-full border-b-[3px] bg-transparent p-3 font-body text-sm focus:outline-none transition-colors min-h-[180px] resize-y ${
+                        errors.message ? "border-destructive focus:border-destructive" : "border-foreground focus:border-primary"
+                      }`}
+                      placeholder="Tell me about your project, idea, or just say hello... (min 20 chars)"
                       maxLength={1000}
                     />
+                    {errors.message && (
+                      <p className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
+                        {errors.message}
+                      </p>
+                    )}
                   </div>
 
-                  {/* Honeypot spam field: keep hidden from human users */}
+                  {/* Anti-Spam Verification */}
+                  <div className="pt-4 border-t border-foreground/10">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4">
+                      <div className="flex items-center gap-3">
+                        <ShieldCheck size={18} className="text-primary" />
+                        <label className="font-mono-custom text-[10px] uppercase tracking-[0.2em] text-muted-foreground whitespace-nowrap">
+                          Verify you are human: <span className="text-foreground ml-2 font-bold">{captcha.question} =</span>
+                        </label>
+                      </div>
+                      <div className="flex-1 max-w-[120px]">
+                        <input
+                          type="number"
+                          value={captchaInput}
+                          onChange={(e) => {
+                            setCaptchaInput(e.target.value);
+                            setErrors(prev => ({ ...prev, captcha: "" }));
+                          }}
+                          className={`w-full border-b-[3px] bg-transparent p-2 font-mono-custom text-sm focus:outline-none transition-colors ${
+                            errors.captcha ? "border-destructive" : "border-foreground focus:border-primary"
+                          }`}
+                          placeholder="?"
+                        />
+                      </div>
+                    </div>
+                    {errors.captcha && (
+                      <p className="text-[10px] text-destructive font-mono-custom mt-2 uppercase tracking-wider italic">
+                        {errors.captcha}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Honeypot spam fields: keep hidden from human users */}
                   <div className="hidden" aria-hidden="true">
-                    <label htmlFor="website">Website</label>
-                    <input
-                      id="website"
-                      type="text"
-                      autoComplete="off"
-                      tabIndex={-1}
-                      value={formData.website}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, website: e.target.value }))}
-                    />
+                    <div>
+                      <label htmlFor="website">Website</label>
+                      <input
+                        id="website"
+                        name="website"
+                        type="text"
+                        autoComplete="off"
+                        tabIndex={-1}
+                        value={formData.website}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="_subject_line">Subject</label>
+                      <input
+                        id="_subject_line"
+                        name="_subject_line"
+                        type="text"
+                        autoComplete="off"
+                        tabIndex={-1}
+                        value={formData._subject_line}
+                        onChange={handleInputChange}
+                      />
+                    </div>
                   </div>
                 </div>
 

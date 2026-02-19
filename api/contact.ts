@@ -35,8 +35,22 @@ type ResponseLike = {
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 255;
 const MAX_MESSAGE_LENGTH = 1000;
+const MIN_MESSAGE_LENGTH = 20;
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const isSpamContent = (message: string) => {
+  // Check for Cyrillic characters (common in the spam messages seen in the screenshot)
+  const cyrillicPattern = /[\u0400-\u04FF]/;
+  if (cyrillicPattern.test(message)) return true;
+
+  // Simple heuristic: Excessive URLs in a short message
+  const lowerMessage = message.toLowerCase();
+  const urlCount = (lowerMessage.match(/https?:\/\//g) || []).length;
+  if (urlCount > 2 || (urlCount > 0 && message.length < 100)) return true;
+
+  return false;
+};
 
 const escapeHtml = (unsafe: string) =>
   unsafe
@@ -46,20 +60,20 @@ const escapeHtml = (unsafe: string) =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
-const parseBody = (req: RequestLike): ContactPayload => {
+const parseBody = (req: RequestLike): ContactPayload & { _subject_line?: string } => {
   if (!req.body) {
     return {};
   }
 
   if (typeof req.body === "string") {
     try {
-      return JSON.parse(req.body) as ContactPayload;
+      return JSON.parse(req.body) as ContactPayload & { _subject_line?: string };
     } catch {
       return {};
     }
   }
 
-  return req.body;
+  return req.body as ContactPayload & { _subject_line?: string };
 };
 
 const formatSubmittedAt = () =>
@@ -161,14 +175,16 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
     });
   }
 
-  const { name = "", email = "", message = "", website = "" } = parseBody(req);
+  const body = parseBody(req);
+  const { name = "", email = "", message = "", website = "", _subject_line = "" } = body;
   const normalizedName = name.trim();
   const normalizedEmail = email.trim();
   const normalizedMessage = message.trim();
-  const honeypot = website.trim();
+  const honeypot1 = website.trim();
+  const honeypot2 = _subject_line.trim();
 
   // Bot trap: silently accept to avoid tipping off automated submitters.
-  if (honeypot) {
+  if (honeypot1 || honeypot2 || isSpamContent(normalizedMessage) || isSpamContent(normalizedName)) {
     return res.status(200).json({ success: true, message: "Message sent successfully." });
   }
 
@@ -176,6 +192,7 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
     !normalizedName ||
     !normalizedEmail ||
     !normalizedMessage ||
+    normalizedMessage.length < MIN_MESSAGE_LENGTH ||
     normalizedName.length > MAX_NAME_LENGTH ||
     normalizedEmail.length > MAX_EMAIL_LENGTH ||
     normalizedMessage.length > MAX_MESSAGE_LENGTH ||
@@ -183,7 +200,7 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
   ) {
     return res.status(400).json({
       success: false,
-      message: "Please provide valid name, email, and message.",
+      message: "Please provide valid name, email, and message (min 20 characters).",
     });
   }
 
