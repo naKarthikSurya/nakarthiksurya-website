@@ -221,25 +221,11 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Honeypot spam trap
-    if (formData.website.trim() || formData._subject_line.trim()) {
-      toast({ title: "Message Sent!", description: "Thank you for reaching out. I'll get back to you soon." });
-      setFormData({ name: "", email: "", message: "", website: "", _subject_line: "" });
-      setCaptchaInput("");
-      return;
-    }
-
-    // Time-based trap (if less than 3 seconds, likely a bot)
-    if (Date.now() - loadTime < 3000) {
-      toast({ title: "Message Sent!", description: "Thank you for reaching out. I'll get back to you soon." });
-      setFormData({ name: "", email: "", message: "", website: "", _subject_line: "" });
-      setCaptchaInput("");
-      return;
-    }
-
     const trimmedName = formData.name.trim();
     const trimmedEmail = formData.email.trim();
     const trimmedMessage = formData.message.trim();
+
+    setErrors({ email: "", message: "", captcha: "" });
 
     if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       setErrors(prev => ({
@@ -262,8 +248,18 @@ const Contact = () => {
       return;
     }
 
-    if (parseInt(captchaInput) !== captcha.answer) {
+    if (Number.parseInt(captchaInput.trim(), 10) !== captcha.answer) {
       setErrors(prev => ({ ...prev, captcha: "Incorrect verification answer." }));
+      return;
+    }
+
+    // Honeypot spam trap
+    if (formData.website.trim() || formData._subject_line.trim()) {
+      return;
+    }
+
+    // Time-based trap (if less than 3 seconds, likely a bot)
+    if (Date.now() - loadTime < 3000) {
       return;
     }
 
@@ -271,6 +267,13 @@ const Contact = () => {
     setErrors({ name: "", email: "", message: "", captcha: "" });
 
     try {
+      const submission = {
+        ...formData,
+        name: trimmedName,
+        email: trimmedEmail,
+        message: trimmedMessage,
+      };
+
       if (brevoApiKey && brevoToEmail && brevoFromEmail) {
         await sendViaBrevoDirect(trimmedName, trimmedEmail, trimmedMessage);
       } else {
@@ -279,7 +282,7 @@ const Contact = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(submission),
         });
 
         const contentType = response.headers.get("content-type") ?? "";
