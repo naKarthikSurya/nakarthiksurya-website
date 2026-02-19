@@ -92,7 +92,7 @@ const Contact = () => {
   const [captcha, setCaptcha] = useState({ question: "", answer: 0 });
   const [captchaInput, setCaptchaInput] = useState("");
   const [loadTime] = useState(Date.now());
-  const [errors, setErrors] = useState({ email: "", message: "", captcha: "" });
+  const [errors, setErrors] = useState({ name: "", email: "", message: "", captcha: "" });
 
   const contactEndpoint = import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact";
   const brevoApiKey = import.meta.env.VITE_BREVO_API_KEY;
@@ -106,6 +106,13 @@ const Contact = () => {
   }, []);
 
   const validateField = (name: string, value: string) => {
+    if (name === "name") {
+      if (!value.trim()) {
+        setErrors(prev => ({ ...prev, name: "Please enter your name." }));
+      } else {
+        setErrors(prev => ({ ...prev, name: "" }));
+      }
+    }
     if (name === "email") {
       if (value && !EMAIL_PATTERN.test(value)) {
         setErrors(prev => ({ ...prev, email: "Please enter a valid email address." }));
@@ -125,7 +132,17 @@ const Contact = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    if (name === "name" && value.trim()) {
+      setErrors(prev => ({ ...prev, name: "" }));
+    }
     validateField(name, value);
+  };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    if (name === "name" || name === "email" || name === "message") {
+      validateField(name, value);
+    }
   };
 
   const parseJsonSafely = async (response: Response): Promise<ContactApiResponse | null> => {
@@ -225,6 +242,12 @@ const Contact = () => {
     const trimmedMessage = formData.message.trim();
 
     if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      setErrors(prev => ({
+        ...prev,
+        name: !trimmedName ? "Please enter your name." : "",
+        email: !trimmedEmail ? "Please enter your email address." : prev.email,
+        message: !trimmedMessage ? "Please enter your message." : prev.message,
+      }));
       toast({ title: "Error", description: "Please fill in all fields.", variant: "destructive" });
       return;
     }
@@ -245,7 +268,7 @@ const Contact = () => {
     }
 
     setLoading(true);
-    setErrors({ email: "", message: "", captcha: "" });
+    setErrors({ name: "", email: "", message: "", captcha: "" });
 
     try {
       if (brevoApiKey && brevoToEmail && brevoFromEmail) {
@@ -360,10 +383,21 @@ const Contact = () => {
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full border-b-[3px] border-foreground bg-transparent p-3 font-body text-sm focus:outline-none focus:border-primary transition-colors"
+                        onBlur={handleInputBlur}
+                        aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? "contact-name-error" : undefined}
+                        required
+                        className={`w-full border-b-[3px] bg-transparent p-3 font-body text-sm focus:outline-none transition-colors ${
+                          errors.name ? "border-destructive focus:border-destructive" : "border-foreground focus:border-primary"
+                        }`}
                         placeholder="John Doe"
                         maxLength={100}
                       />
+                      {errors.name && (
+                        <p id="contact-name-error" className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="font-mono-custom text-[10px] uppercase tracking-[0.2em] text-muted-foreground block mb-3">
@@ -374,6 +408,10 @@ const Contact = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
+                        onBlur={handleInputBlur}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? "contact-email-error" : undefined}
+                        required
                         className={`w-full border-b-[3px] bg-transparent p-3 font-body text-sm focus:outline-none transition-colors ${
                           errors.email ? "border-destructive focus:border-destructive" : "border-foreground focus:border-primary"
                         }`}
@@ -381,7 +419,7 @@ const Contact = () => {
                         maxLength={255}
                       />
                       {errors.email && (
-                        <p className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
+                        <p id="contact-email-error" className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
                           {errors.email}
                         </p>
                       )}
@@ -402,6 +440,11 @@ const Contact = () => {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
+                      onBlur={handleInputBlur}
+                      aria-invalid={Boolean(errors.message)}
+                      aria-describedby={errors.message ? "contact-message-error" : undefined}
+                      required
+                      minLength={20}
                       className={`w-full border-b-[3px] bg-transparent p-3 font-body text-sm focus:outline-none transition-colors min-h-[180px] resize-y ${
                         errors.message ? "border-destructive focus:border-destructive" : "border-foreground focus:border-primary"
                       }`}
@@ -409,7 +452,7 @@ const Contact = () => {
                       maxLength={1000}
                     />
                     {errors.message && (
-                      <p className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
+                      <p id="contact-message-error" className="text-[10px] text-destructive font-mono-custom mt-1 uppercase tracking-wider italic">
                         {errors.message}
                       </p>
                     )}
@@ -428,6 +471,9 @@ const Contact = () => {
                         <input
                           type="number"
                           value={captchaInput}
+                          required
+                          aria-invalid={Boolean(errors.captcha)}
+                          aria-describedby={errors.captcha ? "contact-captcha-error" : undefined}
                           onChange={(e) => {
                             setCaptchaInput(e.target.value);
                             setErrors(prev => ({ ...prev, captcha: "" }));
@@ -440,7 +486,7 @@ const Contact = () => {
                       </div>
                     </div>
                     {errors.captcha && (
-                      <p className="text-[10px] text-destructive font-mono-custom mt-2 uppercase tracking-wider italic">
+                      <p id="contact-captcha-error" className="text-[10px] text-destructive font-mono-custom mt-2 uppercase tracking-wider italic">
                         {errors.captcha}
                       </p>
                     )}
