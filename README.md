@@ -1,131 +1,88 @@
-# Karthik Surya Portfolio
+# Karthik Surya | Personal Portfolio & AI Portfolio
 
-Personal portfolio site for **Karthik Surya** built with React + Vite + TypeScript, with custom SEO metadata and Brevo-powered contact mailer.
+A high-performance, aesthetically driven personal portfolio website for **Karthik Surya**, a Software Engineer and AI Developer specializing in Multi-Agent Systems, RAG, and intelligent automation.
 
-Live domain target: `https://nakarthiksurya.com`
+Built with a modern stack focusing on **Visual Excellence**, **SEO Optimization**, and **Seamless UX**.
 
-## Tech Stack
+Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 
-- React 18 + TypeScript
-- Vite 5
-- React Router
-- Tailwind CSS + shadcn/ui
-- Framer Motion
-- React Helmet Async (SEO meta management)
-- Brevo Transactional Email API (contact form emails)
-- Vitest + Testing Library
+## 🚀 Key Features
 
-## Pages / Routes
+- **Brutalist-Inspired Aesthetics**: A signature design style using bold borders, vibrant accents, and high-impact typography.
+- **AI-Centric Project Showcase**: Detailed breakdown of projects like *LegalAdviser-AI* and *Legal Information Retrieval System*.
+- **Interactive Progress & Experience**: Dynamic timeline and skill visualizations using Framer Motion.
+- **Dual-Mode Contact System**: Integrated contact form with support for both client-side Brevo direct send and serverless API modes.
+- **Advanced SEO Engine**: Custom-built SEO component managing JSON-LD, Meta tags, OpenGraph, and Twitter Cards per route.
+- **Performance Optimized**: Built on Vite with React 18, utilizing SSG/SSR patterns where applicable.
+- **Responsive & Accessible**: Fully optimized for mobile, tablet, and desktop viewing with accessibility best practices.
 
-- `/` Home
-- `/about` About
-- `/experience` Experience
-- `/projects` Projects
-- `/contact` Contact
-- `/resume` Resume Viewer
-- `*` 404
+## 🛠️ Tech Stack
 
-Routes are defined in `src/App.tsx`.
+### Core
+- **Framework**: [React 18](https://reactjs.org/) (Vite-powered)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
-## SEO Setup
+### Services & Integrations
+- **Email**: [Brevo (formerly Sendinblue)](https://www.brevo.com/) Transactional API
+- **SEO**: React Helmet Async + Custom Config
+- **Deployment**: Vercel (recommended) / Static Hosting
 
-SEO is configured with:
+### Tooling
+- **Bundler**: Vite 5
+- **Linting**: ESLint + Prettier
+- **Testing**: Vitest + Testing Library
 
-- `src/config/seo.ts` for global site metadata
-- `src/components/Seo.tsx` for per-page tags (title, description, canonical, OG, Twitter, JSON-LD)
-- `public/robots.txt`
-- `public/sitemap.xml`
-- `index.html` fallback meta tags
+## 📂 Project Structure
 
-Each main page injects route-specific metadata using `<Seo />`.
-
-## Contact Form / Mailer
-
-Contact form is in `src/pages/Contact.tsx`.
-
-It supports two sending modes:
-
-1. React-only direct Brevo mode (no separate backend runtime)
-2. Serverless API fallback mode (`api/contact.ts`)
-
-### Email behavior
-
-On each successful submission, two mails are sent:
-
-- Owner notification email (to your inbox)
-- User acknowledgment email (to submitter inbox)
-
-Both use professional HTML templates.
-
-## Environment Variables
-
-Use `.env.example` as reference.
-
-### React-only mode (client-side)
-
-These are read by Vite and exposed to browser bundle:
-
-- `VITE_BREVO_API_KEY`
-- `VITE_CONTACT_TO_EMAIL`
-- `VITE_CONTACT_FROM_EMAIL`
-- `VITE_CONTACT_ENDPOINT` (optional, fallback endpoint path)
-
-### Server-only mode (API route)
-
-- `BREVO_API_KEY`
-- `CONTACT_TO_EMAIL`
-- `CONTACT_FROM_EMAIL`
-
-## Local Development
-
-Install dependencies:
-
-```bash
-npm install
+```text
+├── api/             # Serverless backend functions (Contact API)
+├── public/          # Static assets (robots.txt, profile images, resume PDF)
+├── src/
+│   ├── components/  # Reusable UI components (Navbar, Footer, SEO, etc.)
+│   │   └── ui/      # shadcn/ui components
+│   ├── config/      # Global site configuration (SEO constants)
+│   ├── pages/       # Main route components (Index, About, Experience, Projects)
+│   ├── App.tsx      # Routing and application entry
+│   └── main.tsx     # React DOM initialization
+├── .env.example     # Template for environment variables
+└── tailwind.config.ts # Custom theme and brutalist design tokens
 ```
 
-Run dev server:
+## ⚙️ Local Development
 
-```bash
-npm run dev
-```
+### Prerequisites
+- Node.js (Latest LTS)
+- npm or bun
 
-Build for production:
+### Setup
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Create a `.env` file based on `.env.example` and add your Brevo API keys.
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run build
-```
+### Quality Control
+- **Lint**: `npm run lint`
+- **Test**: `npm run test`
+- **Build**: `npm run build`
 
-Preview production build:
+## 📧 Contact Setup
 
-```bash
-npm run preview
-```
+The contact system (found in `src/pages/Contact.tsx`) is designed for flexibility:
 
-Run tests:
+- **Client-Side Mode**: If `VITE_BREVO_API_KEY` is provided, the frontend will send emails directly. *Note: Use with caution in public repos.*
+- **API Mode**: For better security, keep the key server-side and the frontend will attempt to call `/api/contact`.
 
-```bash
-npm run test
-```
+## 📄 License
 
-Run lint:
+This project is personal property. Feel free to use it as inspiration, but please respect the personal branding and content.
 
-```bash
-npm run lint
-```
-
-## Deployment Notes
-
-- If you use React-only mode, emails work anywhere but API key is public in client bundle.
-- For safer production, prefer server-side mode using `api/contact.ts` on a serverless platform.
-- Ensure `CONTACT_FROM_EMAIL` / `VITE_CONTACT_FROM_EMAIL` is a verified sender in Brevo.
-
-## Important Files
-
-- `src/App.tsx` route map
-- `src/config/seo.ts` global SEO config
-- `src/components/Seo.tsx` SEO tag injector
-- `src/pages/Contact.tsx` contact form + direct Brevo mail logic
-- `api/contact.ts` serverless mail endpoint
-- `public/robots.txt` crawler directives
-- `public/sitemap.xml` sitemap
+---
+Created with ❤️ by [Karthik Surya](https://github.com/nakarthiksurya)
