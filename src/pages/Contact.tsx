@@ -232,13 +232,11 @@ const Contact = () => {
 
     // Honeypot spam trap
     if (formData.website.trim() || formData._subject_line.trim()) {
-      toast({ title: "Please try again.", description: "We couldn't process your request.", variant: "destructive" });
       return;
     }
 
     // Time-based trap (if less than 3 seconds, likely a bot)
     if (Date.now() - loadTime < 3000) {
-      toast({ title: "Please try again.", description: "We couldn't process your request.", variant: "destructive" });
       return;
     }
 
