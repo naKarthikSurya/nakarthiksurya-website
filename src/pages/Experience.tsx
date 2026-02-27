@@ -64,9 +64,9 @@ const Experience = () => {
   return (
     <>
       <Seo
-        title="Experience"
-        description="Work experience of Karthik Surya across Software Engineering, AI internships, and production deployments in intelligent systems."
-        keywords="Karthik Surya experience, Software Engineer C1X, AI internships, RAG and multi-agent development"
+        title="Experience | Software Engineer"
+        description="Professional experience of Karthik Surya, including building intelligent agents at C1X, RAG systems, and AI-driven production applications."
+        keywords="Karthik Surya experience, C1X Chennai, AI Developer career, RAG developer experience, Software Engineer portfolio"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">

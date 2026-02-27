@@ -85,9 +85,9 @@ const About = () => {
   return (
     <>
       <Seo
-        title="About"
-        description="Learn more about Karthik Surya, a Software Engineer focused on Generative AI, NLP, and production-ready intelligent systems."
-        keywords="About Karthik Surya, AI Engineer background, Generative AI developer, NLP engineer"
+        title="About Karthik Surya"
+        description="Learn about Karthik Surya's background in AI & Data Science, his role as a Software Engineer at C1X, and his expertise in NLP and RAG systems."
+        keywords="Karthik Surya background, AI Engineer Chennai, C1X Software Engineer, NLP Specialist India, B.Tech AI & Data Science"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
@@ -117,8 +117,9 @@ const About = () => {
               <div className="brutalist-border-thick w-full max-w-xs h-96 bg-muted overflow-hidden" style={{ transform: "rotate(-2deg)" }}>
                 <img
                   src="/profile-photo.jpg"
-                  alt="Karthik Surya"
+                  alt="Karthik Surya - Software Engineer at Class One Exchange"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="font-display text-8xl text-primary/30">KS</span></div>';

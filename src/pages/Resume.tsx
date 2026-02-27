@@ -56,9 +56,9 @@ const Resume = () => {
   return (
     <>
       <Seo
-        title="Resume"
-        description="View and download the resume of Karthik Surya, Software Engineer and AI Developer."
-        keywords="Karthik Surya resume, Software Engineer resume, AI Developer CV"
+        title="Resume | Software Engineer & AI Developer"
+        description="View or download the professional resume of Karthik Surya, a Software Engineer at C1X specializing in AI systems and RAG."
+        keywords="Karthik Surya resume, AI Developer CV, Software Engineer resume download, C1X engineer resume"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">

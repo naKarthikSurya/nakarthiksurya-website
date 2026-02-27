@@ -35,13 +35,43 @@ const Seo = ({
   const { pathname } = useLocation();
   const canonicalUrl =
     canonical ?? `${siteConfig.siteUrl}${pathname === "/" ? "/" : pathname}`;
-  const pageTitle = title ? `${title} | ${siteConfig.siteName}` : siteConfig.defaultTitle;
+  const pageTitle = title
+    ? `${title} | ${siteConfig.siteName}`
+    : siteConfig.defaultTitle;
   const pageDescription = description ?? siteConfig.defaultDescription;
   const pageKeywords = keywords ?? siteConfig.defaultKeywords;
   const pageImage = toAbsoluteUrl(image ?? siteConfig.defaultOgImage);
   const robots = noIndex
     ? "noindex, nofollow"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+
+  const breadcrumbsSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: pathname
+      .split("/")
+      .filter(Boolean)
+      .reduce(
+        (acc: any[], curr, idx, arr) => {
+          const url = `/${arr.slice(0, idx + 1).join("/")}`;
+          acc.push({
+            "@type": "ListItem",
+            position: idx + 1,
+            name: curr.charAt(0).toUpperCase() + curr.slice(1),
+            item: `${siteConfig.siteUrl}${url}`,
+          });
+          return acc;
+        },
+        [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteConfig.siteUrl,
+          },
+        ],
+      ),
+  };
 
   const defaultSchema: Array<Record<string, unknown>> = [
     {
@@ -50,35 +80,53 @@ const Seo = ({
       name: siteConfig.siteName,
       url: siteConfig.siteUrl,
       inLanguage: "en",
+      publisher: {
+        "@type": "Person",
+        name: siteConfig.siteName,
+      },
     },
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": `${siteConfig.siteUrl}/#person`,
       name: siteConfig.siteName,
       jobTitle: "Software Engineer & AI Developer",
       url: siteConfig.siteUrl,
       email: siteConfig.email,
       telephone: siteConfig.phone,
+      image: toAbsoluteUrl(siteConfig.defaultOgImage),
+      description: siteConfig.defaultDescription,
       address: {
         "@type": "PostalAddress",
         addressLocality: "Chennai",
+        addressRegion: "Tamil Nadu",
         addressCountry: "IN",
       },
-      sameAs: siteConfig.sameAs,
+      sameAs: [
+        ...siteConfig.sameAs,
+        "https://twitter.com/nakarthiksurya", // Adding twitter if available or placeholder
+      ],
+      knowsAbout: [
+        "Artificial Intelligence",
+        "Software Engineering",
+        "Generative AI",
+        "Multi-Agent Systems",
+        "Retrieval-Augmented Generation (RAG)",
+        "Natural Language Processing",
+      ],
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
+      "@id": `${canonicalUrl}/#webpage`,
       name: pageTitle,
       description: pageDescription,
       url: canonicalUrl,
-      isPartOf: {
-        "@type": "WebSite",
-        name: siteConfig.siteName,
-        url: siteConfig.siteUrl,
-      },
+      isPartOf: { "@id": `${siteConfig.siteUrl}/#website` },
+      primaryImageOfPage: { "@id": `${pageImage}/#primaryimage` },
       inLanguage: "en",
     },
+    breadcrumbsSchema,
   ];
 
   const customSchema = structuredData
@@ -105,7 +153,10 @@ const Seo = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteConfig.siteName} />
       <meta property="og:image" content={pageImage} />
-      <meta property="og:image:alt" content={`${siteConfig.siteName} portfolio preview`} />
+      <meta
+        property="og:image:alt"
+        content={`${siteConfig.siteName} portfolio preview`}
+      />
       <meta property="og:locale" content="en_US" />
 
       <meta name="twitter:card" content="summary_large_image" />
@@ -123,4 +174,3 @@ const Seo = ({
 };
 
 export default Seo;
-

@@ -8,8 +8,8 @@ const Index = () => {
     <>
       <Seo
         title="Software Engineer & AI Developer"
-        description="Karthik Surya builds production-ready AI systems, multi-agent workflows, and RAG applications. Explore projects, experience, and contact details."
-        keywords="Karthik Surya portfolio, AI Developer India, Software Engineer portfolio, Multi-agent systems, RAG developer"
+        description="Karthik Surya is a Software Engineer & AI Developer specializing in intelligent agents, multi-agent systems, and RAG. Explore my portfolio and projects."
+        keywords="Karthik Surya, nakarthiksurya, Software Engineer, AI Developer, Chennai, Multi-agent systems, RAG applications, Generative AI"
       />
       <section className="min-h-[calc(100vh-5rem)] flex flex-col justify-center relative overflow-hidden">
         {/* Copper accent block */}
@@ -43,7 +43,7 @@ const Index = () => {
               >
                 <p className="font-mono-custom text-xs md:text-sm text-muted-foreground max-w-lg">
                   Currently building intelligent agents & multi-agent systems at C1X, Chennai.
-                  B.Tech in AI & Data Science.
+                  B.Tech in Artificial Intelligence & Data Science.
                 </p>
               </motion.div>
 
@@ -85,8 +85,9 @@ const Index = () => {
               <div className="brutalist-border-thick w-64 h-80 bg-muted flex items-center justify-center overflow-hidden" style={{ transform: "rotate(2deg)" }}>
                 <img
                   src="/profile-photo.jpg"
-                  alt="Karthik Surya"
+                  alt="Karthik Surya - Software Engineer & AI Developer"
                   className="w-full h-full object-cover"
+                  loading="lazy"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = "none";
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<span class="font-display text-6xl text-primary/30">KS</span>';
