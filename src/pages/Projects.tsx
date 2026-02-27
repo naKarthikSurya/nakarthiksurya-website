@@ -45,9 +45,9 @@ const Projects = () => {
   return (
     <>
       <Seo
-        title="Projects"
-        description="Explore major projects by Karthik Surya, including legal AI assistants, RAG systems, and real-time ML applications."
-        keywords="Karthik Surya projects, Legal AI, RAG portfolio, Gemini API projects, FastAPI AI projects"
+        title="Projects & Portfolio"
+        description="Explore Karthik Surya's AI projects, including LegalAdviser-AI, RAG systems, and Vision Transformer applications for real-world impact."
+        keywords="Karthik Surya projects, Legal AI India, RAG systems portfolio, Gemini AI applications, Vision Transformer projects"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">

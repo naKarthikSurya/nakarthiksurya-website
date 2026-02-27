@@ -317,9 +317,9 @@ const Contact = () => {
   return (
     <>
       <Seo
-        title="Contact"
-        description="Get in touch with Karthik Surya for Software Engineering, AI development, and collaboration opportunities."
-        keywords="Contact Karthik Surya, AI developer contact, Software Engineer India contact"
+        title="Contact Karthik Surya"
+        description="Get in touch with Karthik Surya for AI development collaborations, software engineering roles, or to discuss intelligent agent workflows."
+        keywords="Contact Karthik Surya, AI Developer recruiter, Software Engineer Chennai contact, Hire AI Developer India"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
