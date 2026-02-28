@@ -48,6 +48,18 @@ const Projects = () => {
         title="Projects & Portfolio"
         description="Explore Karthik Surya's AI projects, including LegalAdviser-AI, RAG systems, and Vision Transformer applications for real-world impact."
         keywords="Karthik Surya projects, Legal AI India, RAG systems portfolio, Gemini AI applications, Vision Transformer projects"
+        structuredData={projects.map(p => ({
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": p.title,
+          "description": p.description,
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Any",
+          "author": {
+            "@type": "Person",
+            "name": "Karthik Surya"
+          }
+        }))}
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
@@ -87,7 +99,7 @@ const Projects = () => {
                 <span className="brutalist-border px-2 py-0.5 font-mono-custom text-[10px] uppercase">{project.date}</span>
               </div>
 
-              <h3 className="font-display text-2xl md:text-3xl mb-1">{project.title}</h3>
+              <h2 className="font-display text-2xl md:text-3xl mb-1">{project.title}</h2>
               <p className="font-mono-custom text-xs text-primary uppercase tracking-wider mb-4">{project.subtitle}</p>
               <p className="font-body text-sm text-foreground/70 leading-relaxed flex-1 mb-6">{project.description}</p>
 

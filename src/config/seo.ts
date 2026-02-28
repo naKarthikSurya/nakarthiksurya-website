@@ -14,6 +14,8 @@ export const siteConfig = {
   sameAs: [
     "https://github.com/nakarthiksurya",
     "https://linkedin.com/in/karthiksurya-na",
+    "https://x.com/nakarthiksurya",
   ],
+  lastUpdated: "2026-02-28",
 } as const;
 
