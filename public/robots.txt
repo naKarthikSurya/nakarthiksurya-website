@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# Specifically allow AI crawlers for GEO
+User-agent: GPTBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
 Sitemap: https://nakarthiksurya.com/sitemap.xml

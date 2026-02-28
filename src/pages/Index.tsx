@@ -10,6 +10,24 @@ const Index = () => {
         title="Software Engineer & AI Developer"
         description="Karthik Surya is a Software Engineer & AI Developer specializing in intelligent agents, multi-agent systems, and RAG. Explore my portfolio and projects."
         keywords="Karthik Surya, nakarthiksurya, Software Engineer, AI Developer, Chennai, Multi-agent systems, RAG applications, Generative AI"
+        faqs={[
+          {
+            question: "What does Karthik Surya specialize in?",
+            answer: "I specialize in building production-ready AI systems, specifically focusing on multi-agent workflows, Retrieval-Augmented Generation (RAG), and intelligent automation using LLMs like Gemini and LLaMA."
+          },
+          {
+            question: "What is Karthik Surya's educational background?",
+            answer: "I hold a B.Tech in Artificial Intelligence and Data Science from Panimalar Institute of Technology, with a focus on machine learning and natural language processing."
+          },
+          {
+            question: "Where is Karthik Surya currently working?",
+            answer: "I am currently working as a Software Engineer at Class One Exchange (C1X) in Chennai, India, where I develop real-time intelligent agents and RAG-based systems."
+          },
+          {
+            question: "What technical stack does Karthik Surya use?",
+            answer: "My core stack includes Python (FastAPI, PyTorch), TypeScript (React, NestJS), and various AI frameworks like CrewAI, LlamaIndex, and the Gemini API."
+          }
+        ]}
       />
       <section className="min-h-[calc(100vh-5rem)] flex flex-col justify-center relative overflow-hidden">
         {/* Copper accent block */}
@@ -101,6 +119,48 @@ const Index = () => {
 
         {/* Bottom border accent */}
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
+      </section>
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-display text-4xl md:text-5xl mb-12 text-center">
+              FREQUENTLY ASKED<br />QUESTIONS<span className="text-primary">.</span>
+            </h2>
+            
+            <div className="space-y-6">
+              {[
+                {
+                  q: "What does Karthik Surya specialize in?",
+                  a: "I specialize in building production-ready AI systems, specifically focusing on multi-agent workflows, Retrieval-Augmented Generation (RAG), and intelligent automation using LLMs like Gemini and LLaMA."
+                },
+                {
+                  q: "What is Karthik Surya's educational background?",
+                  a: "I hold a B.Tech in Artificial Intelligence and Data Science from Panimalar Institute of Technology, with a focus on machine learning and natural language processing."
+                },
+                {
+                  q: "Where is Karthik Surya currently working?",
+                  a: "I am currently working as a Software Engineer at Class One Exchange (C1X) in Chennai, India, where I develop real-time intelligent agents and RAG-based systems."
+                },
+                {
+                  q: "What technical stack does Karthik Surya use?",
+                  a: "My core stack includes Python (FastAPI, PyTorch), TypeScript (React, NestJS), and various AI frameworks like CrewAI, LlamaIndex, and the Gemini API."
+                }
+              ].map((faq, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="brutalist-border-thick p-6 bg-background shadow-[4px_4px_0_hsl(var(--primary))]"
+                >
+                  <h3 className="font-display text-xl mb-3">{faq.q}</h3>
+                  <p className="font-body text-sm text-foreground/70 leading-relaxed">{faq.a}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

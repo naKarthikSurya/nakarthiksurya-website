@@ -11,6 +11,16 @@ type SeoProps = {
   noIndex?: boolean;
   canonical?: string;
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  faqs?: Array<{ question: string; answer: string }>;
+  isProject?: boolean;
+  projectData?: {
+    name: string;
+    description: string;
+    url?: string;
+    image?: string;
+    applicationCategory?: string;
+    operatingSystem?: string;
+  };
 };
 
 const toAbsoluteUrl = (url: string) => {
@@ -31,6 +41,9 @@ const Seo = ({
   noIndex = false,
   canonical,
   structuredData,
+  faqs,
+  isProject = false,
+  projectData,
 }: SeoProps) => {
   const { pathname } = useLocation();
   const canonicalUrl =
@@ -128,6 +141,38 @@ const Seo = ({
     },
     breadcrumbsSchema,
   ];
+
+  if (isProject && projectData) {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": projectData.name,
+      "description": projectData.description,
+      "url": projectData.url ?? canonicalUrl,
+      "image": toAbsoluteUrl(projectData.image ?? siteConfig.defaultOgImage),
+      "applicationCategory": projectData.applicationCategory ?? "DeveloperApplication",
+      "operatingSystem": projectData.operatingSystem ?? "Any",
+      "author": {
+        "@type": "Person",
+        "name": siteConfig.siteName
+      }
+    });
+  }
+
+  if (faqs && faqs.length > 0) {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    });
+  }
 
   const customSchema = structuredData
     ? Array.isArray(structuredData)
