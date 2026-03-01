@@ -15,6 +15,7 @@ export const siteConfig = {
     "https://github.com/nakarthiksurya",
     "https://linkedin.com/in/karthiksurya-na",
     "https://x.com/nakarthiksurya",
+    "https://youtube.com/@nakarthiksurya-ks",
   ],
   lastUpdated: "2026-02-28",
 } as const;
