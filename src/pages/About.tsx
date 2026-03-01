@@ -85,8 +85,8 @@ const About = () => {
   return (
     <>
       <Seo
-        title="About Karthik Surya"
-        description="Learn about Karthik Surya's background in AI & Data Science, his role as a Software Engineer at C1X, and his expertise in NLP and RAG systems."
+        title="About | Karthik Surya - AI & Software Engineer"
+        description="Discover Karthik Surya's journey in AI & Data Science, his engineering role at C1X, and his specialization in building intelligent multi-agent systems and RAG."
         keywords="Karthik Surya background, AI Engineer Chennai, C1X Software Engineer, NLP Specialist India, B.Tech AI & Data Science"
       />
       <section className="py-16 md:py-24">

@@ -7,8 +7,8 @@ const Index = () => {
   return (
     <>
       <Seo
-        title="Software Engineer & AI Developer"
-        description="Karthik Surya is a Software Engineer & AI Developer specializing in intelligent agents, multi-agent systems, and RAG. Explore my portfolio and projects."
+        title="Karthik Surya | Software Engineer & AI Developer"
+        description="Official portfolio of Karthik Surya, a Software Engineer & AI Developer specializing in intelligent agents, multi-agent systems, and RAG. Explore my projects and expertise."
         keywords="Karthik Surya, nakarthiksurya, Software Engineer, AI Developer, Chennai, Multi-agent systems, RAG applications, Generative AI"
         faqs={[
           {

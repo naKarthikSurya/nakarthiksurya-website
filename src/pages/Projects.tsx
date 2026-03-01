@@ -45,8 +45,8 @@ const Projects = () => {
   return (
     <>
       <Seo
-        title="Projects & Portfolio"
-        description="Explore Karthik Surya's AI projects, including LegalAdviser-AI, RAG systems, and Vision Transformer applications for real-world impact."
+        title="Projects | Karthik Surya AI Portfolio"
+        description="Explore the AI and software engineering projects by Karthik Surya, featuring LegalAdviser-AI, RAG systems, and advanced Vision Transformer applications."
         keywords="Karthik Surya projects, Legal AI India, RAG systems portfolio, Gemini AI applications, Vision Transformer projects"
         structuredData={projects.map(p => ({
           "@context": "https://schema.org",
