@@ -6,7 +6,7 @@ const navLinks = [
   { to: "/", label: "HOME" },
   { to: "/about", label: "ABOUT" },
   { to: "/experience", label: "EXPERIENCE" },
-  { to: "/projects", label: "WORKS" },
+  { to: "/projects", label: "PROJECTS" },
   { to: "/contact", label: "CONTACT" },
 ];
 
@@ -15,16 +15,17 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background brutalist-border-thick border-t-0 border-l-0 border-r-0">
+    <nav
+      aria-label="Primary"
+      className="fixed top-0 left-0 right-0 z-50 bg-background brutalist-border-thick border-t-0 border-l-0 border-r-0"
+    >
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
           <Link to="/" className="flex flex-col">
             <span className="font-display text-2xl md:text-3xl leading-none tracking-tight">KARTHIK SURYA</span>
             <span className="font-mono-custom text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest">Software Engineer</span>
           </Link>
 
-          {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
@@ -45,7 +46,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden brutalist-border p-2 hover:bg-primary hover:text-primary-foreground transition-colors"
@@ -56,7 +56,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="lg:hidden brutalist-border-thick border-l-0 border-r-0 border-t-0 bg-background">
           <div className="container mx-auto px-4 py-4 flex flex-col gap-1">

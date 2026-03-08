@@ -6,9 +6,8 @@ import { componentTagger } from "lovable-tagger";
 import sitemap from "vite-plugin-sitemap";
 
 const customDomain = "nakarthiksurya.com";
-const routes = ["/", "/about", "/projects", "/experience", "/contact"];
+const routes = ["/about", "/projects", "/experience", "/contact", "/resume"];
 
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",

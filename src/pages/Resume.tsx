@@ -56,9 +56,9 @@ const Resume = () => {
   return (
     <>
       <Seo
-        title="Resume | Software Engineer & AI Developer"
-        description="View or download the professional resume of Karthik Surya, a Software Engineer at C1X specializing in AI systems and RAG."
-        keywords="Karthik Surya resume, AI Developer CV, Software Engineer resume download, C1X engineer resume"
+        title="Resume"
+        description="View or download the professional resume of Karthik Surya, a software engineer at C1X specializing in AI systems, RAG, and agentic workflows."
+        keywords="Karthik Surya resume, AI developer CV, software engineer resume download, C1X engineer resume"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
@@ -69,6 +69,9 @@ const Resume = () => {
             <h1 className="font-display text-6xl md:text-8xl relative z-10">
               RESUME<span className="text-primary">.</span>
             </h1>
+            <p className="font-body text-sm md:text-base text-foreground/70 max-w-3xl mt-4 relative z-10">
+              Review the latest version of my resume for roles involving software engineering, AI products, RAG systems, and agentic workflow development.
+            </p>
           </div>
 
           <div className="brutalist-border-thick p-4 md:p-6">
