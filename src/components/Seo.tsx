@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router-dom";
-import { siteConfig } from "@/config/seo";
+import { buildPageTitle, getCanonicalUrl, routeSeo, siteConfig } from "@/config/seo";
 
 type SeoProps = {
   title?: string;
@@ -37,7 +37,7 @@ const Seo = ({
   description,
   keywords,
   image,
-  type = "website",
+  type,
   noIndex = false,
   canonical,
   structuredData,
@@ -46,14 +46,13 @@ const Seo = ({
   projectData,
 }: SeoProps) => {
   const { pathname } = useLocation();
-  const canonicalUrl =
-    canonical ?? `${siteConfig.siteUrl}${pathname === "/" ? "/" : pathname}`;
-  const pageTitle = title
-    ? `${title} | ${siteConfig.siteName}`
-    : siteConfig.defaultTitle;
-  const pageDescription = description ?? siteConfig.defaultDescription;
-  const pageKeywords = keywords ?? siteConfig.defaultKeywords;
+  const routeDefaults = routeSeo[pathname] ?? {};
+  const canonicalUrl = canonical ?? getCanonicalUrl(pathname);
+  const pageTitle = buildPageTitle(title ?? routeDefaults.title);
+  const pageDescription = description ?? routeDefaults.description ?? siteConfig.defaultDescription;
+  const pageKeywords = keywords ?? routeDefaults.keywords ?? siteConfig.defaultKeywords;
   const pageImage = toAbsoluteUrl(image ?? siteConfig.defaultOgImage);
+  const pageType = type ?? routeDefaults.ogType ?? "website";
   const robots = noIndex
     ? "noindex, nofollow"
     : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
@@ -65,12 +64,13 @@ const Seo = ({
       .split("/")
       .filter(Boolean)
       .reduce(
-        (acc: any[], curr, idx, arr) => {
+        (acc: Array<Record<string, unknown>>, curr, idx, arr) => {
           const url = `/${arr.slice(0, idx + 1).join("/")}`;
+          const routeMeta = routeSeo[url];
           acc.push({
             "@type": "ListItem",
-            position: idx + 1,
-            name: curr.charAt(0).toUpperCase() + curr.slice(1),
+            position: idx + 2,
+            name: routeMeta?.title ?? curr.charAt(0).toUpperCase() + curr.slice(1),
             item: `${siteConfig.siteUrl}${url}`,
           });
           return acc;
@@ -80,7 +80,7 @@ const Seo = ({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: siteConfig.siteUrl,
+            item: `${siteConfig.siteUrl}/`,
           },
         ],
       ),
@@ -90,12 +90,12 @@ const Seo = ({
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
+      "@id": `${siteConfig.siteUrl}/#website`,
       name: siteConfig.siteName,
-      url: siteConfig.siteUrl,
-      inLanguage: "en",
+      url: `${siteConfig.siteUrl}/`,
+      inLanguage: siteConfig.language,
       publisher: {
-        "@type": "Person",
-        name: siteConfig.siteName,
+        "@id": `${siteConfig.siteUrl}/#person`,
       },
     },
     {
@@ -103,22 +103,27 @@ const Seo = ({
       "@type": "Person",
       "@id": `${siteConfig.siteUrl}/#person`,
       name: siteConfig.siteName,
-      jobTitle: "Software Engineer & AI Developer",
-      url: siteConfig.siteUrl,
+      jobTitle: siteConfig.jobTitle,
+      worksFor: {
+        "@type": "Organization",
+        name: siteConfig.employer,
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Panimalar Institute of Technology",
+      },
+      url: `${siteConfig.siteUrl}/`,
       email: siteConfig.email,
       telephone: siteConfig.phone,
-      image: toAbsoluteUrl(siteConfig.defaultOgImage),
+      image: toAbsoluteUrl(siteConfig.defaultProfileImage),
       description: siteConfig.defaultDescription,
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Chennai",
-        addressRegion: "Tamil Nadu",
-        addressCountry: "IN",
+        addressLocality: siteConfig.addressLocality,
+        addressRegion: siteConfig.addressRegion,
+        addressCountry: siteConfig.addressCountry,
       },
-      sameAs: [
-        ...siteConfig.sameAs,
-        "https://twitter.com/nakarthiksurya", // Adding twitter if available or placeholder
-      ],
+      sameAs: Array.from(new Set(siteConfig.sameAs)),
       knowsAbout: [
         "Artificial Intelligence",
         "Software Engineering",
@@ -131,31 +136,91 @@ const Seo = ({
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "@id": `${canonicalUrl}/#webpage`,
+      "@id": `${canonicalUrl}#webpage`,
       name: pageTitle,
       description: pageDescription,
       url: canonicalUrl,
       isPartOf: { "@id": `${siteConfig.siteUrl}/#website` },
-      primaryImageOfPage: { "@id": `${pageImage}/#primaryimage` },
-      inLanguage: "en",
+      about: { "@id": `${siteConfig.siteUrl}/#person` },
+      primaryImageOfPage: pageImage,
+      inLanguage: siteConfig.language,
+      dateModified: siteConfig.lastUpdated,
     },
     breadcrumbsSchema,
   ];
+
+  if (routeDefaults.schemaType === "ProfilePage") {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": `${canonicalUrl}#profilepage`,
+      name: pageTitle,
+      description: pageDescription,
+      url: canonicalUrl,
+      mainEntity: { "@id": `${siteConfig.siteUrl}/#person` },
+    });
+  }
+
+  if (routeDefaults.schemaType === "CollectionPage") {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${canonicalUrl}#collectionpage`,
+      name: pageTitle,
+      description: pageDescription,
+      url: canonicalUrl,
+      mainEntity:
+        routeDefaults.itemList?.length > 0
+          ? {
+              "@type": "ItemList",
+              itemListElement: routeDefaults.itemList.map((name: string, index: number) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name,
+              })),
+            }
+          : undefined,
+    });
+  }
+
+  if (routeDefaults.schemaType === "ContactPage") {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "@id": `${canonicalUrl}#contactpage`,
+      name: pageTitle,
+      description: pageDescription,
+      url: canonicalUrl,
+      mainEntity: { "@id": `${siteConfig.siteUrl}/#person` },
+    });
+  }
+
+  if (pathname === "/resume") {
+    defaultSchema.push({
+      "@context": "https://schema.org",
+      "@type": "DigitalDocument",
+      "@id": `${canonicalUrl}#resume`,
+      name: "Karthik Surya Resume",
+      url: toAbsoluteUrl(siteConfig.resumePath),
+      encodingFormat: "application/pdf",
+      creator: { "@id": `${siteConfig.siteUrl}/#person` },
+    });
+  }
 
   if (isProject && projectData) {
     defaultSchema.push({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": projectData.name,
-      "description": projectData.description,
-      "url": projectData.url ?? canonicalUrl,
-      "image": toAbsoluteUrl(projectData.image ?? siteConfig.defaultOgImage),
-      "applicationCategory": projectData.applicationCategory ?? "DeveloperApplication",
-      "operatingSystem": projectData.operatingSystem ?? "Any",
-      "author": {
+      name: projectData.name,
+      description: projectData.description,
+      url: projectData.url ?? canonicalUrl,
+      image: toAbsoluteUrl(projectData.image ?? siteConfig.defaultOgImage),
+      applicationCategory: projectData.applicationCategory ?? "DeveloperApplication",
+      operatingSystem: projectData.operatingSystem ?? "Any",
+      author: {
         "@type": "Person",
-        "name": siteConfig.siteName
-      }
+        name: siteConfig.siteName,
+      },
     });
   }
 
@@ -163,14 +228,14 @@ const Seo = ({
     defaultSchema.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": faqs.map(faq => ({
+      mainEntity: faqs.map((faq) => ({
         "@type": "Question",
-        "name": faq.question,
-        "acceptedAnswer": {
+        name: faq.question,
+        acceptedAnswer: {
           "@type": "Answer",
-          "text": faq.answer
-        }
-      }))
+          text: faq.answer,
+        },
+      })),
     });
   }
 
@@ -185,29 +250,33 @@ const Seo = ({
     <Helmet prioritizeSeoTags>
       <title>{pageTitle}</title>
       <link rel="canonical" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="en-IN" href={canonicalUrl} />
 
       <meta name="description" content={pageDescription} />
       <meta name="keywords" content={pageKeywords} />
       <meta name="author" content={siteConfig.author} />
       <meta name="robots" content={robots} />
       <meta name="googlebot" content={robots} />
+      <meta name="theme-color" content={siteConfig.themeColor} />
 
-      <meta property="og:type" content={type} />
+      <meta property="og:type" content={pageType} />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:site_name" content={siteConfig.siteName} />
       <meta property="og:image" content={pageImage} />
-      <meta
-        property="og:image:alt"
-        content={`${siteConfig.siteName} portfolio preview`}
-      />
-      <meta property="og:locale" content="en_US" />
+      <meta property="og:image:width" content={String(siteConfig.ogImageWidth)} />
+      <meta property="og:image:height" content={String(siteConfig.ogImageHeight)} />
+      <meta property="og:image:alt" content={siteConfig.defaultOgImageAlt} />
+      <meta property="og:locale" content={siteConfig.locale} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
       <meta name="twitter:image" content={pageImage} />
+      <meta name="twitter:creator" content={siteConfig.twitterHandle} />
+      <meta name="twitter:site" content={siteConfig.twitterHandle} />
+      <meta property="article:modified_time" content={siteConfig.lastUpdated} />
 
       {schemas.map((schema, index) => (
         <script key={`schema-${index}`} type="application/ld+json">

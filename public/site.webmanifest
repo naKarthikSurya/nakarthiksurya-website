@@ -1,0 +1,16 @@
+{
+  "name": "Karthik Surya | Software Engineer & AI Developer",
+  "short_name": "Karthik Surya",
+  "description": "Portfolio of Karthik Surya, focused on AI agents, RAG systems, and software engineering.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6efe5",
+  "theme_color": "#c97832",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

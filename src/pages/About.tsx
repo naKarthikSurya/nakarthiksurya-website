@@ -25,12 +25,6 @@ const skills = [
   "RAG Systems", "FastAPI", "NestJS", "Docker", "Python", "TypeScript"
 ];
 
-// const stats = [
-//   { value: "8.30", label: "Cumulative GPA", rotate: "-2deg" },
-//   { value: "08+", label: "Months Experience", rotate: "1.5deg" },
-//   { value: "04", label: "Major Projects", rotate: "-1deg" },
-// ];
-
 type MarqueeSkill = {
   name: string;
   logo?: string;
@@ -85,13 +79,13 @@ const About = () => {
   return (
     <>
       <Seo
-        title="About | Karthik Surya - AI & Software Engineer"
-        description="Discover Karthik Surya's journey in AI & Data Science, his engineering role at C1X, and his specialization in building intelligent multi-agent systems and RAG."
-        keywords="Karthik Surya background, AI Engineer Chennai, C1X Software Engineer, NLP Specialist India, B.Tech AI & Data Science"
+        title="About"
+        description="Discover Karthik Surya's journey in AI and data science, his engineering role at C1X, and his specialization in intelligent agents, RAG, and NLP systems."
+        keywords="Karthik Surya background, AI engineer Chennai, C1X software engineer, NLP specialist India, B.Tech AI and data science"
+        type="profile"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
-          {/* Heading */}
           <div className="relative mb-16">
             <span className="font-display text-[6rem] md:text-[12rem] text-foreground/5 absolute -top-8 md:-top-16 left-0 select-none leading-none">
               ABOUT
@@ -107,7 +101,6 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Photo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -116,19 +109,14 @@ const About = () => {
             >
               <div className="brutalist-border-thick w-full max-w-xs h-96 bg-muted overflow-hidden" style={{ transform: "rotate(-2deg)" }}>
                 <img
-                  src="/profile-photo.jpg"
+                  src="/profile.jpg"
                   alt="Karthik Surya - Software Engineer at Class One Exchange"
                   className="w-full h-full object-cover"
                   loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center"><span class="font-display text-8xl text-primary/30">KS</span></div>';
-                  }}
                 />
               </div>
             </motion.div>
 
-            {/* Bio */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -149,7 +137,6 @@ const About = () => {
                   Experienced in machine learning, natural language processing, and cloud-based model deployment. Passionate about solving real-world problems with scalable AI solutions.
                 </p>
 
-                {/* Skills Tags */}
                 <div className="mt-8 flex flex-wrap gap-2">
                   {skills.map((skill) => (
                     <span
@@ -164,27 +151,6 @@ const About = () => {
             </motion.div>
           </div>
 
-          {/* Stats */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 + i * 0.15 }}
-              className="brutalist-border-thick p-6 md:p-8 bg-background hover:bg-primary/5 transition-colors"
-              style={{ transform: `rotate(${stat.rotate})` }}
-            >
-              <div className="flex items-baseline gap-4">
-                <span className="font-display text-5xl md:text-7xl text-primary">{stat.value}</span>
-                <span className="font-mono-custom text-xs md:text-sm uppercase tracking-widest text-muted-foreground">{stat.label}</span>
-              </div>
-              <div className="mt-3 h-1 w-16 bg-primary" />
-            </motion.div>
-          ))}
-        </div> */}
-
-          {/* ─── SKILLS ─── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -237,7 +203,6 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* ─── EDUCATION ─── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -248,15 +213,14 @@ const About = () => {
               EDUCATION<span className="text-primary">.</span>
             </h2>
 
-            {/* Main Education Card */}
             <div className="brutalist-border-thick p-8 md:p-12 mb-8">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
                   <div className="inline-block brutalist-border px-3 py-1 mb-4">
-                    <span className="font-mono-custom text-xs uppercase tracking-widest text-primary">2021 – 2025</span>
+                    <span className="font-mono-custom text-xs uppercase tracking-widest text-primary">2021 - 2025</span>
                   </div>
                   <h3 className="font-display text-3xl md:text-5xl">B.TECH IN AI & DATA SCIENCE</h3>
-                  <p className="font-mono-custom text-sm text-muted-foreground mt-2">Panimalar Institute of Technology — Chennai, Tamil Nadu</p>
+                  <p className="font-mono-custom text-sm text-muted-foreground mt-2">Panimalar Institute of Technology - Chennai, Tamil Nadu</p>
                 </div>
                 <div className="brutalist-border-thick p-4 md:p-6 bg-primary/5" style={{ transform: "rotate(-2deg)" }}>
                   <span className="font-display text-4xl md:text-6xl text-primary">8.30</span>
@@ -265,16 +229,15 @@ const About = () => {
               </div>
             </div>
 
-            {/* School Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="brutalist-border-thick p-6 md:p-8" style={{ transform: "rotate(1deg)" }}>
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <div className="inline-block brutalist-border px-3 py-1 mb-4">
-                      <span className="font-mono-custom text-xs uppercase tracking-widest">2020 – 2021</span>
+                      <span className="font-mono-custom text-xs uppercase tracking-widest">2020 - 2021</span>
                     </div>
                     <h3 className="font-display text-2xl md:text-3xl">HIGHER SECONDARY (12TH)</h3>
-                    <p className="font-mono-custom text-sm text-muted-foreground mt-1">Green Park International School — Namakkal</p>
+                    <p className="font-mono-custom text-sm text-muted-foreground mt-1">Green Park International School - Namakkal</p>
                   </div>
                   <div className="brutalist-border-thick p-4 md:p-6 bg-primary/5" style={{ transform: "rotate(-2deg)" }}>
                     <span className="font-display text-2xl md:text-4xl text-primary">77.4%</span>
@@ -287,10 +250,10 @@ const About = () => {
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <div className="inline-block brutalist-border px-3 py-1 mb-4">
-                      <span className="font-mono-custom text-xs uppercase tracking-widest">2018 – 2019</span>
+                      <span className="font-mono-custom text-xs uppercase tracking-widest">2018 - 2019</span>
                     </div>
                     <h3 className="font-display text-2xl md:text-3xl">SECONDARY SCHOOL (10TH)</h3>
-                    <p className="font-mono-custom text-sm text-muted-foreground mt-1">Green Park International School — Namakkal</p>
+                    <p className="font-mono-custom text-sm text-muted-foreground mt-1">Green Park International School - Namakkal</p>
                   </div>
                   <div className="brutalist-border-thick p-4 md:p-6 bg-primary/5" style={{ transform: "rotate(-2deg)" }}>
                     <span className="font-display text-2xl md:text-4xl text-primary">77.4%</span>
@@ -301,7 +264,6 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* ─── PUBLICATIONS ─── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -320,14 +282,18 @@ const About = () => {
               </p>
               <div className="flex flex-wrap gap-3">
                 <span className="brutalist-border px-3 py-1 font-mono-custom text-xs">DOI: 10.55041/IJSREM48260</span>
-                <a href="#" className="brutalist-border px-4 py-1 font-mono-custom text-xs uppercase bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2">
+                <a
+                  href="https://doi.org/10.55041/IJSREM48260"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="brutalist-border px-4 py-1 font-mono-custom text-xs uppercase bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2"
+                >
                   <ExternalLink size={12} /> Read Paper
                 </a>
               </div>
             </div>
           </motion.div>
 
-          {/* ─── CERTIFICATIONS ─── */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

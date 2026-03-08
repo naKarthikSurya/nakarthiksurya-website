@@ -166,7 +166,7 @@ const Contact = () => {
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
-        "accept": "application/json",
+        accept: "application/json",
         "api-key": brevoApiKey,
         "content-type": "application/json",
       },
@@ -253,12 +253,10 @@ const Contact = () => {
       return;
     }
 
-    // Honeypot spam trap
     if (formData.website.trim() || formData._subject_line.trim()) {
       return;
     }
 
-    // Time-based trap (if less than 3 seconds, likely a bot)
     if (Date.now() - loadTime < 3000) {
       return;
     }
@@ -317,15 +315,25 @@ const Contact = () => {
   return (
     <>
       <Seo
-        title="Contact Karthik Surya"
-        description="Get in touch with Karthik Surya for AI development collaborations, software engineering roles, or to discuss intelligent agent workflows."
-        keywords="Contact Karthik Surya, AI Developer recruiter, Software Engineer Chennai contact, Hire AI Developer India"
+        title="Contact"
+        description="Get in touch with Karthik Surya for AI development collaborations, software engineering roles, consulting, or intelligent agent workflows."
+        keywords="Contact Karthik Surya, AI developer recruiter, software engineer Chennai contact, hire AI developer India"
       />
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
-          {/* Split Layout: Big CTA left, form right */}
+          <div className="max-w-3xl mb-12">
+            <p className="font-mono-custom text-xs uppercase tracking-[0.3em] text-muted-foreground mb-3">
+              Contact
+            </p>
+            <h1 className="font-display text-5xl md:text-7xl mb-4">
+              LET&apos;S BUILD SOMETHING USEFUL<span className="text-primary">.</span>
+            </h1>
+            <p className="font-body text-sm md:text-base text-foreground/70 leading-relaxed">
+              Reach out for software engineering roles, AI product work, RAG implementations, or collaboration around agentic systems.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
-            {/* Left: Big statement + contact info */}
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
@@ -333,15 +341,15 @@ const Contact = () => {
               className="lg:col-span-2 brutalist-border-thick p-8 md:p-12 bg-foreground text-background flex flex-col justify-between"
             >
               <div>
-                <h1 className="font-display text-5xl md:text-7xl leading-none mb-8">
+                <h2 className="font-display text-5xl md:text-7xl leading-none mb-8">
                   GOT A
                   <br />
                   PROJECT
                   <br />
                   IN MIND<span className="text-primary">?</span>
-                </h1>
+                </h2>
                 <p className="font-body text-sm text-background/60 leading-relaxed mb-10">
-                  Whether it&apos;s a collaboration, a job opportunity, or just a friendly hello - I&apos;d love to hear from you.
+                  Whether it&apos;s a collaboration, a job opportunity, or a quick hello, I&apos;d love to hear from you.
                 </p>
               </div>
 
@@ -349,7 +357,7 @@ const Contact = () => {
                 {[
                   { icon: Mail, value: "n.a.karthiksurya@gmail.com", href: "mailto:n.a.karthiksurya@gmail.com" },
                   { icon: Phone, value: "+91-9360498834", href: "tel:+919360498834" },
-                  { icon: MapPin, value: "Chennai / Bangalore, India", href: "#" },
+                  { icon: MapPin, value: "Chennai / Bangalore, India", href: "https://maps.google.com/?q=Chennai,+India" },
                 ].map((item, i) => (
                   <motion.a
                     key={i}
@@ -367,7 +375,6 @@ const Contact = () => {
               </div>
             </motion.div>
 
-            {/* Right: Form */}
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
@@ -461,7 +468,6 @@ const Contact = () => {
                     )}
                   </div>
 
-                  {/* Anti-Spam Verification */}
                   <div className="pt-4 border-t border-foreground/10">
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
                       <div className="flex items-center gap-3">
@@ -495,7 +501,6 @@ const Contact = () => {
                     )}
                   </div>
 
-                  {/* Honeypot spam fields: keep hidden from human users */}
                   <div className="hidden" aria-hidden="true">
                     <div>
                       <label htmlFor="website">Website</label>
@@ -535,7 +540,6 @@ const Contact = () => {
             </motion.div>
           </div>
 
-          {/* Social Links Row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
