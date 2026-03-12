@@ -25,8 +25,14 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     sitemap({
-      hostname: `https://${customDomain}`,
+      hostname: `https://www.${customDomain}`,
       dynamicRoutes: routes,
+      robots: [
+        {
+          userAgent: "*",
+          allow: "/",
+        },
+      ],
     }),
     mode === "development" && componentTagger(),
   ].filter(Boolean),
