@@ -23,7 +23,7 @@ const expertiseAreas = [
     description:
       "User-facing web apps and APIs with React, TypeScript, Python, FastAPI, and production-oriented architecture.",
     href: "/about",
-    cta: "Learn more",
+    cta: "Learn more about me",
   },
 ];
 
@@ -96,6 +96,37 @@ const Index = () => {
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
+      </section>
+
+      <section className="py-20 bg-muted/30">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-display text-4xl md:text-5xl mb-6">
+              EXPERT AI DEVELOPER & FULL-STACK ENGINEER EXPERTISE<span className="text-primary">.</span>
+            </h2>
+            <div className="font-body text-base text-foreground/80 leading-relaxed font-normal space-y-6">
+              <p>
+                As a dedicated <strong className="text-foreground">Software Engineer</strong> and <strong className="text-foreground">AI Developer</strong> based in Chennai, India, I specialize in architecting and deploying scalable, intelligent systems. 
+                My focus is on transforming conceptual AI research into robust, production-ready web applications that drive real business value.
+              </p>
+              <p>
+                A core pillar of my technical repertoire is building dynamic <strong className="text-foreground">Retrieval-Augmented Generation (RAG)</strong> workflows. 
+                By leveraging advanced foundational models like Gemini and Llama, alongside semantic search engines such as Qdrant and ColBERT, 
+                I design RAG pipelines that ground language model responses in proprietary data. This ensures high-signal, hallucination-free outputs critical for enterprise AI solutions.
+              </p>
+              <p>
+                Beyond standard implementations, I engineer complex <strong className="text-foreground">Multi-Agent Systems</strong>. Using frameworks like CrewAI and the Model Context Protocol (MCP), 
+                I orchestrate autonomous agents that can collaborate, utilize external tools, and automate intricate business processes across platforms like Jira, GitHub, and Slack. 
+                From real-time qualitative sentiment analysis to automated document processing, these agentic architectures significantly enhance operational efficiency.
+              </p>
+              <p>
+                On the <strong className="text-foreground">Full-Stack Development</strong> front, I bring these AI capabilities to life through intuitive, fast, and responsive user interfaces. 
+                My stack primarily revolves around React and TypeScript for the frontend, coupled with robust Python (FastAPI) and Node.js (NestJS) backends. 
+                Every application I build prioritizes clean code, thorough testing, secure data handling, and optimized deployment via Docker, ensuring that the end product is as reliable as it is innovative.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="py-20">

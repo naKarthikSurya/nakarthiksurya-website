@@ -80,7 +80,7 @@ const Experience = () => {
               transition={{ duration: 0.5 }}
               className="font-display text-6xl md:text-8xl relative z-10"
             >
-              EXPERIENCE<span className="text-primary">.</span>
+              Professional Experience<span className="text-primary">.</span>
             </motion.h1>
           </div>
 

@@ -84,8 +84,8 @@ const Projects = () => {
               transition={{ duration: 0.5 }}
               className="relative z-10"
             >
-              <h1 className="font-display text-6xl md:text-8xl">
-                PROJECTS<span className="text-primary">.</span>
+              <h1 className="font-display text-4xl md:text-6xl lg:text-7xl">
+                Portfolio Projects of Karthik Surya<span className="text-primary">.</span>
               </h1>
               <div className="inline-block brutalist-border px-3 py-1 mt-4">
                 <span className="font-mono-custom text-xs uppercase tracking-widest">Selected AI and software projects 2024-2025</span>

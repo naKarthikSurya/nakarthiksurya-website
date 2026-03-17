@@ -96,7 +96,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
               className="font-display text-6xl md:text-8xl relative z-10"
             >
-              ABOUT<span className="text-primary">.</span>
+              About Karthik Surya | Software Engineer<span className="text-primary">.</span>
             </motion.h1>
           </div>
 

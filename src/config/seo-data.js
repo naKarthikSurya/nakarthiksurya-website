@@ -1,17 +1,17 @@
 export const siteConfig = {
-  siteUrl: "https://nakarthiksurya.com",
+  siteUrl: "https://www.nakarthiksurya.com",
   siteName: "Karthik Surya",
   author: "Karthik Surya",
   jobTitle: "Software Engineer & AI Developer",
   employer: "Class One Exchange (C1X)",
-  defaultTitle: "Karthik Surya | Software Engineer, AI Developer, and RAG Engineer",
+  defaultTitle: "Karthik Surya — AI Engineer & Software Engineer",
   defaultDescription:
-    "Official portfolio of Karthik Surya, a software engineer and AI developer building AI agents, multi-agent systems, RAG workflows, and production-ready applications.",
+    "Software engineer building AI agents and RAG systems. Projects, resume, and contact. Based in Chennai, India.",
   defaultKeywords:
-    "Karthik Surya, nakarthiksurya, software engineer portfolio, AI developer portfolio, RAG engineer, AI agents, multi-agent systems, generative AI, Chennai India",
+    "Karthik Surya, AI engineer, software engineer, RAG engineer, AI agents, multi-agent systems, generative AI, Chennai India",
   defaultOgImage: "/profile.jpg",
   defaultOgImageAlt:
-    "Karthik Surya portfolio preview for software engineering and AI development",
+    "Karthik Surya - Software Engineer and AI Developer Portfolio",
   defaultProfileImage: "/profile.jpg",
   themeColor: "#c97832",
   ogImageWidth: 1200,
@@ -19,7 +19,7 @@ export const siteConfig = {
   language: "en-IN",
   locale: "en_IN",
   email: "n.a.karthiksurya@gmail.com",
-  phone: "+91-9360498834",
+  phone: "+91-93********34",
   location: "Chennai / Bangalore, India",
   addressLocality: "Chennai",
   addressRegion: "Tamil Nadu",
@@ -38,34 +38,34 @@ export const siteConfig = {
 export const routeSeo = {
   "/": {
     description:
-      "Official portfolio of Karthik Surya, a software engineer and AI developer building AI agents, multi-agent systems, RAG workflows, and production-ready applications.",
+      "Software engineer building AI agents and RAG systems. Projects, resume, and contact. Based in Chennai, India.",
     keywords:
-      "Karthik Surya, software engineer portfolio, AI developer portfolio, RAG engineer, AI agents, multi-agent systems, Chennai India",
+      "Karthik Surya, AI engineer, software engineer, RAG engineer, AI agents, multi-agent systems, Chennai India",
     ogType: "website",
     schemaType: "WebPage",
   },
   "/about": {
-    title: "About",
+    title: "About Karthik Surya | Software Engineer",
     description:
-      "Learn about Karthik Surya's background in artificial intelligence, his engineering work at C1X, and his focus on AI agents, RAG, and NLP systems.",
+      "Learn about Karthik Surya's journey in AI, his engineering work at C1X, and his focus on scalable AI agents, RAG, and NLP systems.",
     keywords:
       "About Karthik Surya, AI engineer India, software engineer Chennai, C1X engineer, artificial intelligence portfolio",
     ogType: "profile",
     schemaType: "ProfilePage",
   },
   "/experience": {
-    title: "Experience",
+    title: "Professional Experience",
     description:
-      "Review Karthik Surya's experience building intelligent agents, RAG systems, and production AI tools at C1X and in earlier internships.",
+      "Review Karthik Surya's experience building intelligent agents, RAG pipelines, and production AI tools at C1X and in previous internships.",
     keywords:
       "Karthik Surya experience, AI engineer experience, C1X software engineer, RAG developer, generative AI engineer",
     ogType: "website",
     schemaType: "CollectionPage",
   },
   "/projects": {
-    title: "Projects",
+    title: "Portfolio Projects",
     description:
-      "Explore AI and software engineering projects by Karthik Surya, including legal AI assistants, RAG systems, and computer vision applications.",
+      "Explore AI and software engineering projects by Karthik Surya, including legal AI assistants, RAG platforms, and computer vision apps.",
     keywords:
       "Karthik Surya projects, AI projects portfolio, legal AI, RAG projects, computer vision portfolio, software engineering projects",
     ogType: "website",
@@ -78,16 +78,16 @@ export const routeSeo = {
     ],
   },
   "/contact": {
-    title: "Contact",
+    title: "Contact Karthik Surya — AI Engineer & Software Engineer",
     description:
-      "Contact Karthik Surya for AI engineering roles, software projects, consulting, and collaboration opportunities.",
+      "Contact Karthik Surya for AI engineering roles, consulting, and collaboration. Fast response via email.",
     keywords:
       "Contact Karthik Surya, hire AI developer, software engineer contact, AI consultant India, collaboration with Karthik Surya",
     ogType: "website",
     schemaType: "ContactPage",
   },
   "/resume": {
-    title: "Resume",
+    title: "Resume | Karthik Surya — AI Engineer & Software Engineer",
     description:
       "View or download the resume of Karthik Surya, a software engineer and AI developer specializing in agentic AI, RAG, and product engineering.",
     keywords:
@@ -111,7 +111,7 @@ export const buildPageTitle = (title) => {
     return normalizedTitle;
   }
 
-  return `${normalizedTitle} | ${siteConfig.siteName}`;
+  return `${normalizedTitle}`;
 };
 
 export const getCanonicalUrl = (pathname = "/") => {

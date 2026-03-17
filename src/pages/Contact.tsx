@@ -225,7 +225,7 @@ const Contact = () => {
     const trimmedEmail = formData.email.trim();
     const trimmedMessage = formData.message.trim();
 
-    setErrors({ email: "", message: "", captcha: "" });
+    setErrors({ name: "", email: "", message: "", captcha: "" });
 
     if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       setErrors(prev => ({
@@ -356,7 +356,7 @@ const Contact = () => {
               <div className="space-y-4">
                 {[
                   { icon: Mail, value: "n.a.karthiksurya@gmail.com", href: "mailto:n.a.karthiksurya@gmail.com" },
-                  { icon: Phone, value: "+91-9360498834", href: "tel:+919360498834" },
+                  { icon: Phone, value: "93********34", href: "tel:+919360498834" },
                   { icon: MapPin, value: "Chennai / Bangalore, India", href: "https://maps.google.com/?q=Chennai,+India" },
                 ].map((item, i) => (
                   <motion.a
