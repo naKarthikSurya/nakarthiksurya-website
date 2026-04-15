@@ -92,7 +92,8 @@ const About = () => {
             </span>
             <motion.h1
               initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
               className="font-display text-6xl md:text-8xl relative z-10"
             >
@@ -103,7 +104,8 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="flex justify-center lg:justify-start"
             >
@@ -119,11 +121,12 @@ const About = () => {
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="lg:col-span-2"
             >
-              <div className="brutalist-border-thick p-6 md:p-8">
+              <div className="brutalist-border-thick p-6 md:p-8 bg-background/80 backdrop-blur-md">
                 <div className="inline-block brutalist-border px-3 py-1 mb-6">
                   <span className="font-mono-custom text-xs uppercase tracking-widest text-primary">Software Engineer @ C1X</span>
                 </div>
@@ -153,11 +156,12 @@ const About = () => {
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-24"
           >
-            <div className="relative overflow-hidden brutalist-border-thick px-5 py-10 md:px-10 md:py-14">
+            <div className="relative overflow-hidden brutalist-border-thick px-5 py-10 md:px-10 md:py-14 bg-background/80 backdrop-blur-md">
               <div className="relative">
                 <h2 className="font-display text-center text-5xl md:text-6xl text-foreground mb-10">
                   MY SKILLS<span className="text-primary">.</span>
@@ -176,7 +180,7 @@ const About = () => {
                           return (
                             <span
                               key={`skill-${rowIndex}-${skill.name}-${skillIndex}`}
-                              className="group flex shrink-0 items-center gap-2.5 brutalist-border bg-background px-3 py-2 md:px-4 transition-colors hover:bg-primary hover:text-primary-foreground"
+                              className="group flex shrink-0 items-center gap-2.5 brutalist-border bg-background/80 backdrop-blur-md px-3 py-2 md:px-4 transition-colors hover:bg-primary hover:text-primary-foreground"
                             >
                               {skill.logo ? (
                                 <img
@@ -205,7 +209,8 @@ const About = () => {
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.5 }}
             className="mt-24"
           >
@@ -213,7 +218,7 @@ const About = () => {
               EDUCATION<span className="text-primary">.</span>
             </h2>
 
-            <div className="brutalist-border-thick p-8 md:p-12 mb-8">
+            <div className="brutalist-border-thick p-8 md:p-12 mb-8 bg-background/80 backdrop-blur-md">
               <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                 <div>
                   <div className="inline-block brutalist-border px-3 py-1 mb-4">
@@ -230,7 +235,7 @@ const About = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="brutalist-border-thick p-6 md:p-8" style={{ transform: "rotate(1deg)" }}>
+              <div className="brutalist-border-thick p-6 md:p-8 bg-background/80 backdrop-blur-md" style={{ transform: "rotate(1deg)" }}>
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <div className="inline-block brutalist-border px-3 py-1 mb-4">
@@ -246,7 +251,7 @@ const About = () => {
                 </div>
               </div>
 
-              <div className="brutalist-border-thick p-6 md:p-8" style={{ transform: "rotate(-1.5deg)" }}>
+              <div className="brutalist-border-thick p-6 md:p-8 bg-background/80 backdrop-blur-md" style={{ transform: "rotate(-1.5deg)" }}>
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <div className="inline-block brutalist-border px-3 py-1 mb-4">
@@ -266,7 +271,8 @@ const About = () => {
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.6 }}
             className="mt-24"
           >
@@ -274,7 +280,7 @@ const About = () => {
               <BookOpen className="inline mr-3 text-primary" size={32} />
               PUBLICATIONS<span className="text-primary">.</span>
             </h2>
-            <div className="brutalist-border-thick p-6 md:p-8 hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-shadow">
+            <div className="brutalist-border-thick p-6 md:p-8 hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-shadow bg-background/80 backdrop-blur-md">
               <h3 className="font-display text-xl md:text-2xl mb-2">Towards Intelligent Legal Information Retrieval</h3>
               <p className="font-mono-custom text-xs text-muted-foreground mb-2">A Transformer-Based Framework</p>
               <p className="font-body text-sm text-foreground/70 mb-4">
@@ -296,7 +302,8 @@ const About = () => {
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.7 }}
             className="mt-24"
           >
@@ -308,11 +315,11 @@ const About = () => {
               {certifications.map((cert, i) => (
                 <div
                   key={i}
-                  className="brutalist-border-thick p-5 md:p-6 hover:shadow-[6px_6px_0_hsl(var(--primary))] transition-shadow"
+                  className="brutalist-border-thick p-5 md:p-6 hover:shadow-[6px_6px_0_hsl(var(--primary))] transition-shadow bg-background/80 backdrop-blur-md group"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h4 className="font-display text-lg md:text-xl">{cert.title}</h4>
+                      <h4 className="font-display text-lg md:text-xl group-hover:text-primary transition-colors">{cert.title}</h4>
                       <p className="font-mono-custom text-xs text-primary mt-1">{cert.issuer}</p>
                     </div>
                     <span className="font-mono-custom text-[10px] uppercase text-muted-foreground whitespace-nowrap">{cert.date}</span>

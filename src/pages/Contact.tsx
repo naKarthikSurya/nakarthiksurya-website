@@ -336,9 +336,10 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-0">
             <motion.div
               initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="lg:col-span-2 brutalist-border-thick p-8 md:p-12 bg-foreground text-background flex flex-col justify-between"
+              className="lg:col-span-2 brutalist-border-thick p-8 md:p-12 bg-foreground/95 backdrop-blur-xl text-background flex flex-col justify-between"
             >
               <div>
                 <h2 className="font-display text-5xl md:text-7xl leading-none mb-8">
@@ -363,7 +364,8 @@ const Contact = () => {
                     key={i}
                     href={item.href}
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
                     className="flex items-center gap-3 text-background/70 hover:text-primary transition-colors group"
                   >
@@ -377,9 +379,10 @@ const Contact = () => {
 
             <motion.div
               initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-3 brutalist-border-thick border-l-0 lg:border-l-0 border-t-0 lg:border-t-[4px]"
+              className="lg:col-span-3 brutalist-border-thick border-l-0 lg:border-l-0 border-t-0 lg:border-t-[4px] bg-background/80 backdrop-blur-md"
             >
               <form onSubmit={handleSubmit} className="h-full flex flex-col">
                 <div className="p-8 md:p-12 flex-1 space-y-6">
@@ -542,9 +545,10 @@ const Contact = () => {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-0 mt-0"
+            className="grid grid-cols-2 md:grid-cols-4 gap-0 mt-0 bg-background/80 backdrop-blur-md"
           >
             {[
               { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/karthiksurya-na" },
@@ -558,9 +562,11 @@ const Contact = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.5 + i * 0.08 }}
-                className="brutalist-border-thick p-6 flex items-center justify-center gap-3 font-mono-custom text-xs uppercase tracking-widest hover:bg-foreground hover:text-background transition-colors group"
+                whileHover={{ scale: 1.02 }}
+                className="brutalist-border-thick p-6 flex flex-col items-center justify-center gap-3 font-mono-custom text-xs uppercase tracking-widest hover:bg-foreground hover:text-background transition-all group relative overflow-hidden"
               >
                 <social.icon size={18} className="group-hover:text-primary transition-colors" />
                 {social.label}

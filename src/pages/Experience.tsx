@@ -71,12 +71,13 @@ const Experience = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="relative mb-16">
-            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none">
+            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none pointer-events-none">
               WORK
             </span>
             <motion.h1
               initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
               className="font-display text-6xl md:text-8xl relative z-10"
             >
@@ -92,13 +93,14 @@ const Experience = () => {
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.15 }}
-                  className="relative pl-12 md:pl-20"
+                  className="relative pl-12 md:pl-20 group"
                 >
-                  <div className="absolute left-[7px] md:left-[23px] top-2 w-5 h-5 brutalist-border-thick bg-primary" />
+                  <div className="absolute left-[7px] md:left-[23px] top-2 w-5 h-5 brutalist-border-thick bg-primary group-hover:scale-125 transition-transform" />
 
-                  <div className="brutalist-border-thick p-6 md:p-8 hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-shadow">
+                  <div className="brutalist-border-thick p-6 md:p-8 hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-all bg-background/80 backdrop-blur-md">
                     <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                       <div>
                         <h2 className="font-display text-3xl md:text-4xl">{exp.title}</h2>
