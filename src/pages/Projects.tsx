@@ -5,43 +5,63 @@ import Seo from "@/components/Seo";
 const projects = [
   {
     num: "01",
+    title: "nakarthiksurya-website",
+    subtitle: "Personal Portfolio",
+    date: "Feb 2026",
+    description:
+      "Personal portfolio of Karthik Surya, a Software Engineer & AI Developer. Showcasing expertise in Multi-Agent Systems, RAG applications, and Generative AI. Built with React, Vite, and TypeScript.",
+    tags: ["React", "TypeScript", "Vite", "Tailwind CSS"],
+    github: "https://github.com/naKarthikSurya/nakarthiksurya-website",
+  },
+  {
+    num: "02",
+    title: "NilaHospital-Website",
+    subtitle: "Healthcare Website",
+    date: "Dec 2025",
+    description:
+      "Premium responsive healthcare website for Nila Hospital, specializing in Obstetrics and Gynaecology. Built with React, TypeScript, and Tailwind CSS.",
+    tags: ["React", "TypeScript", "Tailwind CSS", "Healthcare"],
+    github: "https://github.com/naKarthikSurya/NilaHospital-Website",
+  },
+  {
+    num: "03",
     title: "LegalAdviser-AI (CivicAI)",
     subtitle: "Multi-Agent Legal Assistant",
     date: "Nov 2025",
     description:
       "Engineered an AI-powered legal assistant for Indian law, using Gemini 2.5 Flash and RAG techniques to provide actionable guidance with validated case-law citations. Architected a multi-agent pipeline from analyzer to researcher to summarizer with automated intent detection.",
     tags: ["FastAPI", "Gemini", "Docker", "RAG", "Multi-Agent"],
-    github: "https://github.com/nakarthiksurya",
+    github: "https://github.com/naKarthikSurya/Legal-Adviser-AI",
   },
   {
-    num: "02",
+    num: "04",
     title: "Legal Information Retrieval System",
     subtitle: "LegalBERT + RAG",
     date: "Feb - May 2025",
     description:
       "Developed a legal question-answering system using a custom-trained LegalBERT model integrated with Retrieval-Augmented Generation (RAG) techniques. Used semantic search and LlamaIndex to retrieve relevant Indian laws and case judgments. Focused on RTI Act and 49 other Indian laws with over 5000 case judgments.",
     tags: ["Python", "Transformers", "LlamaIndex", "FastAPI"],
-    github: "https://github.com/nakarthiksurya",
+    github: "https://github.com/naKarthikSurya/Legal-AI-Model",
   },
   {
-    num: "03",
+    num: "05",
     title: "BeastlyVisionX",
     subtitle: "Animal Image Classifier",
     date: "Aug - Sep 2024",
     description:
       "Developed an animal image classification system using HuggingFace Vision Transformer and FastAPI for real-time species recognition. Created a structured dataset with 90 attributes per class and deployed the model with Docker for scalability.",
     tags: ["Python", "FastAPI", "Docker", "HuggingFace", "ViT"],
-    github: "https://github.com/nakarthiksurya",
+    github: "https://github.com/naKarthikSurya/BeastlyVisionX-Animal-Image-Classifier",
   },
   {
-    num: "04",
+    num: "06",
     title: "AI Story Generator",
     subtitle: "Generative AI Narrative Tool",
     date: "March 2024",
     description:
       "Developed a story generation tool using Generative AI for real-time narrative creation. Assisted writers by generating unique, high-quality prompts and coherent stories. Received positive feedback for enhancing creativity.",
     tags: ["Gemini Pro", "Python", "NLP"],
-    github: "https://github.com/nakarthiksurya",
+    github: "https://github.com/naKarthikSurya/AI-Story-Generator-using-GenAI",
   },
 ];
 
@@ -75,12 +95,13 @@ const Projects = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="relative mb-16">
-            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none">
+            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none pointer-events-none">
               PROJECTS
             </span>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
               className="relative z-10"
             >
@@ -98,9 +119,11 @@ const Projects = () => {
               <motion.div
                 key={project.num}
                 initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{ y: -5, scale: 1.01 }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
-                className="brutalist-border-thick p-6 md:p-8 flex flex-col hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-shadow group"
+                className="brutalist-border-thick p-6 md:p-8 flex flex-col hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-all group bg-background/80 backdrop-blur-md"
               >
                 <div className="flex items-start justify-between mb-4">
                   <span className="font-display text-5xl md:text-6xl text-primary/30">{project.num}</span>

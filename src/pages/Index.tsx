@@ -1,7 +1,10 @@
+import React, { Suspense } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import Seo from "@/components/Seo";
+
+const InteractiveScene3D = React.lazy(() => import("@/components/InteractiveScene3D"));
 
 const expertiseAreas = [
   {
@@ -28,6 +31,10 @@ const expertiseAreas = [
 ];
 
 const Index = () => {
+  const { scrollYProgress } = useScroll();
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, 250]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
+
   return (
     <>
       <Seo
@@ -35,10 +42,13 @@ const Index = () => {
         keywords="Karthik Surya, software engineer portfolio, AI developer portfolio, RAG engineer, AI agents, multi-agent systems, Chennai India"
       />
       <section className="min-h-[calc(100vh-5rem)] flex flex-col justify-center relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-primary opacity-20" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 md:w-48 md:h-48 bg-primary opacity-10" />
+        <Suspense fallback={null}>
+          <InteractiveScene3D />
+        </Suspense>
+        <motion.div style={{ y: y1 }} className="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-primary opacity-20 pointer-events-none rounded-sm" />
+        <motion.div style={{ y: y2 }} className="absolute bottom-0 left-0 w-24 h-24 md:w-48 md:h-48 bg-primary opacity-10 pointer-events-none rounded-sm" />
 
-        <div className="container mx-auto px-4 md:px-8 py-12 md:py-0">
+        <div className="container mx-auto px-4 md:px-8 py-12 md:py-0 relative z-10">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -48,11 +58,27 @@ const Index = () => {
               <p className="font-mono-custom text-xs md:text-sm uppercase tracking-[0.3em] text-muted-foreground mb-4">
                 Software Engineer & AI Developer
               </p>
-              <h1 className="font-display text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] leading-[0.85] tracking-tighter">
-                KARTHIK
+              <motion.h1 
+                className="font-display text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] leading-[0.85] tracking-tighter"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0 },
+                  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+                }}
+              >
+                {"KARTHIK".split('').map((char, i) => (
+                  <motion.span key={`k-${i}`} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} className="inline-block">
+                    {char}
+                  </motion.span>
+                ))}
                 <br />
-                SURYA
-              </h1>
+                {"SURYA".split('').map((char, i) => (
+                  <motion.span key={`s-${i}`} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }} className="inline-block">
+                    {char}
+                  </motion.span>
+                ))}
+              </motion.h1>
             </motion.div>
 
             <motion.div
