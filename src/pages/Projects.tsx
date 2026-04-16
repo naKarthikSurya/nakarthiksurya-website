@@ -1,69 +1,8 @@
 import { motion } from "framer-motion";
-import { Github } from "lucide-react";
+import { Github, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import Seo from "@/components/Seo";
-
-const projects = [
-  {
-    num: "01",
-    title: "nakarthiksurya-website",
-    subtitle: "Personal Portfolio",
-    date: "Feb 2026",
-    description:
-      "Personal portfolio of Karthik Surya, a Software Engineer & AI Developer. Showcasing expertise in Multi-Agent Systems, RAG applications, and Generative AI. Built with React, Vite, and TypeScript.",
-    tags: ["React", "TypeScript", "Vite", "Tailwind CSS"],
-    github: "https://github.com/naKarthikSurya/nakarthiksurya-website",
-  },
-  {
-    num: "02",
-    title: "NilaHospital-Website",
-    subtitle: "Healthcare Website",
-    date: "Dec 2025",
-    description:
-      "Premium responsive healthcare website for Nila Hospital, specializing in Obstetrics and Gynaecology. Built with React, TypeScript, and Tailwind CSS.",
-    tags: ["React", "TypeScript", "Tailwind CSS", "Healthcare"],
-    github: "https://github.com/naKarthikSurya/NilaHospital-Website",
-  },
-  {
-    num: "03",
-    title: "LegalAdviser-AI (CivicAI)",
-    subtitle: "Multi-Agent Legal Assistant",
-    date: "Nov 2025",
-    description:
-      "Engineered an AI-powered legal assistant for Indian law, using Gemini 2.5 Flash and RAG techniques to provide actionable guidance with validated case-law citations. Architected a multi-agent pipeline from analyzer to researcher to summarizer with automated intent detection.",
-    tags: ["FastAPI", "Gemini", "Docker", "RAG", "Multi-Agent"],
-    github: "https://github.com/naKarthikSurya/Legal-Adviser-AI",
-  },
-  {
-    num: "04",
-    title: "Legal Information Retrieval System",
-    subtitle: "LegalBERT + RAG",
-    date: "Feb - May 2025",
-    description:
-      "Developed a legal question-answering system using a custom-trained LegalBERT model integrated with Retrieval-Augmented Generation (RAG) techniques. Used semantic search and LlamaIndex to retrieve relevant Indian laws and case judgments. Focused on RTI Act and 49 other Indian laws with over 5000 case judgments.",
-    tags: ["Python", "Transformers", "LlamaIndex", "FastAPI"],
-    github: "https://github.com/naKarthikSurya/Legal-AI-Model",
-  },
-  {
-    num: "05",
-    title: "BeastlyVisionX",
-    subtitle: "Animal Image Classifier",
-    date: "Aug - Sep 2024",
-    description:
-      "Developed an animal image classification system using HuggingFace Vision Transformer and FastAPI for real-time species recognition. Created a structured dataset with 90 attributes per class and deployed the model with Docker for scalability.",
-    tags: ["Python", "FastAPI", "Docker", "HuggingFace", "ViT"],
-    github: "https://github.com/naKarthikSurya/BeastlyVisionX-Animal-Image-Classifier",
-  },
-  {
-    num: "06",
-    title: "AI Story Generator",
-    subtitle: "Generative AI Narrative Tool",
-    date: "March 2024",
-    description:
-      "Developed a story generation tool using Generative AI for real-time narrative creation. Assisted writers by generating unique, high-quality prompts and coherent stories. Received positive feedback for enhancing creativity.",
-    tags: ["Gemini Pro", "Python", "NLP"],
-    github: "https://github.com/naKarthikSurya/AI-Story-Generator-using-GenAI",
-  },
-];
+import { projects } from "@/config/projects";
 
 const Projects = () => {
   return (
@@ -95,8 +34,8 @@ const Projects = () => {
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8">
           <div className="relative mb-16">
-            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none pointer-events-none">
-              PROJECTS
+            <span className="font-display text-[5rem] md:text-[10rem] text-foreground/5 absolute -top-6 md:-top-12 left-0 select-none leading-none pointer-events-none uppercase">
+              WORK
             </span>
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -106,10 +45,10 @@ const Projects = () => {
               className="relative z-10"
             >
               <h1 className="font-display text-4xl md:text-6xl lg:text-7xl">
-                Portfolio Projects of Karthik Surya<span className="text-primary">.</span>
+                Case Studies & Portfolio Projects<span className="text-primary">.</span>
               </h1>
               <div className="inline-block brutalist-border px-3 py-1 mt-4">
-                <span className="font-mono-custom text-xs uppercase tracking-widest">Selected AI and software projects 2024-2025</span>
+                <span className="font-mono-custom text-xs uppercase tracking-widest text-primary">Focused on applied AI & Scalable Systems</span>
               </div>
             </motion.div>
           </div>
@@ -117,39 +56,45 @@ const Projects = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {projects.map((project, i) => (
               <motion.div
-                key={project.num}
+                key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 whileHover={{ y: -5, scale: 1.01 }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
-                className="brutalist-border-thick p-6 md:p-8 flex flex-col hover:shadow-[8px_8px_0_hsl(var(--primary))] transition-all group bg-background/80 backdrop-blur-md"
+                className="brutalist-border-thick p-6 md:p-8 flex flex-col hover:shadow-[12px_12px_0_hsl(var(--primary))] transition-all group bg-background/80 backdrop-blur-md"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <span className="font-display text-5xl md:text-6xl text-primary/30">{project.num}</span>
-                  <span className="brutalist-border px-2 py-0.5 font-mono-custom text-[10px] uppercase">{project.date}</span>
+                  <span className="font-display text-5xl md:text-6xl text-primary/30 group-hover:text-primary/50 transition-colors uppercase">{project.num}</span>
+                  <span className="brutalist-border px-2 py-0.5 font-mono-custom text-[10px] uppercase font-bold tracking-widest">{project.date}</span>
                 </div>
 
-                <h2 className="font-display text-2xl md:text-3xl mb-1">{project.title}</h2>
-                <p className="font-mono-custom text-xs text-primary uppercase tracking-wider mb-4">{project.subtitle}</p>
+                <h2 className="font-display text-2xl md:text-3xl mb-1 group-hover:text-primary transition-colors">{project.title}</h2>
+                <p className="font-mono-custom text-xs text-primary uppercase tracking-widest font-bold mb-4">{project.subtitle}</p>
                 <p className="font-body text-sm text-foreground/70 leading-relaxed flex-1 mb-6">{project.description}</p>
 
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="brutalist-border px-2 py-0.5 font-mono-custom text-[10px] uppercase tracking-wider">
+                    <span key={tag} className="brutalist-border px-2 py-0.5 font-mono-custom text-[10px] uppercase tracking-wider bg-primary/5">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-3 mt-auto">
+                <div className="flex flex-wrap gap-3 mt-auto">
+                  <Link
+                    href={`/projects/${project.id}`}
+                    className="brutalist-border-thick px-5 py-2 font-mono-custom text-xs uppercase tracking-widest bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2 font-bold"
+                  >
+                    View Case Study <ArrowRight size={14} />
+                  </Link>
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="brutalist-border px-4 py-2 font-mono-custom text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors flex items-center gap-2"
+                    className="brutalist-border px-4 py-2 font-mono-custom text-xs uppercase tracking-wider hover:bg-muted transition-colors flex items-center gap-2"
                   >
-                    <Github size={14} /> GitHub
+                    <Github size={14} /> Code
                   </a>
                 </div>
               </motion.div>
