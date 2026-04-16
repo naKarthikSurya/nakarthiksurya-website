@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import { buildPageTitle, getCanonicalUrl, routeSeo, siteConfig } from "@/config/seo";
 
 type SeoProps = {
@@ -45,7 +45,8 @@ const Seo = ({
   isProject = false,
   projectData,
 }: SeoProps) => {
-  const { pathname } = useLocation();
+  const router = useRouter();
+  const pathname = router.asPath.split("?")[0] || "/";
   const routeDefaults = routeSeo[pathname] ?? {};
   const canonicalUrl = canonical ?? getCanonicalUrl(pathname);
   const pageTitle = buildPageTitle(title ?? routeDefaults.title);
@@ -247,7 +248,7 @@ const Seo = ({
   const schemas = [...defaultSchema, ...customSchema];
 
   return (
-    <Helmet prioritizeSeoTags>
+    <Head>
       <title>{pageTitle}</title>
       <link rel="canonical" href={canonicalUrl} />
       <link rel="alternate" hrefLang="en-IN" href={canonicalUrl} />
@@ -283,7 +284,7 @@ const Seo = ({
           {JSON.stringify(schema)}
         </script>
       ))}
-    </Helmet>
+    </Head>
   );
 };
 
