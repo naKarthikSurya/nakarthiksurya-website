@@ -12,5 +12,5 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://nakarthiksurya.com/sitemap.xml
-Host: nakarthiksurya.com
+Sitemap: https://www.nakarthiksurya.com/sitemap.xml
+Host: https://www.nakarthiksurya.com

@@ -104,6 +104,7 @@ const Seo = ({
       "@type": "Person",
       "@id": `${siteConfig.siteUrl}/#person`,
       name: siteConfig.siteName,
+      alternateName: siteConfig.alternateNames,
       jobTitle: siteConfig.jobTitle,
       worksFor: {
         "@type": "Organization",
