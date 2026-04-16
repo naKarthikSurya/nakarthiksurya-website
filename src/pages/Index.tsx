@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Download, Mail } from "lucide-react";
 import Seo from "@/components/Seo";
@@ -100,19 +100,19 @@ const Index = () => {
               className="mt-8 flex flex-wrap gap-3"
             >
               <Link
-                to="/projects"
+                href="/projects"
                 className="brutalist-border-thick px-6 py-3 font-mono-custom text-xs uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors flex items-center gap-2"
               >
                 View Projects <ArrowRight size={14} />
               </Link>
               <Link
-                to="/resume"
+                href="/resume"
                 className="brutalist-border-thick px-6 py-3 font-mono-custom text-xs uppercase tracking-wider bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-colors flex items-center gap-2"
               >
                 Resume.pdf <Download size={14} />
               </Link>
               <Link
-                to="/contact"
+                href="/contact"
                 className="brutalist-border-thick px-6 py-3 font-mono-custom text-xs uppercase tracking-wider hover:bg-primary hover:text-primary-foreground transition-colors flex items-center gap-2"
               >
                 Contact <Mail size={14} />
@@ -187,7 +187,7 @@ const Index = () => {
                   {area.description}
                 </p>
                 <Link
-                  to={area.href}
+                  href={area.href}
                   className="font-mono-custom text-xs uppercase tracking-wider inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors"
                 >
                   {area.cta} <ArrowRight size={14} />

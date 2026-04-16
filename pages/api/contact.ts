@@ -1,14 +1,18 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+
 type ContactPayload = {
   name?: string;
   email?: string;
   message?: string;
   website?: string;
+  _subject_line?: string;
 };
 
 type JsonResponse = {
   success: boolean;
   message: string;
 };
+
 type BrevoPayload = {
   sender: { email: string; name: string };
   to: Array<{ email: string; name: string }>;
@@ -17,34 +21,16 @@ type BrevoPayload = {
   htmlContent: string;
 };
 
-type RequestLike = {
-  method?: string;
-  body?: string | ContactPayload;
-  headers?: Record<string, string | string[] | undefined>;
-  socket?: {
-    remoteAddress?: string;
-  };
-};
-
-type ResponseLike = {
-  status: (code: number) => ResponseLike;
-  json: (body: JsonResponse) => void;
-  setHeader: (name: string, value: string) => void;
-};
-
 const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 255;
 const MAX_MESSAGE_LENGTH = 1000;
 const MIN_MESSAGE_LENGTH = 20;
-
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const isSpamContent = (message: string) => {
-  // Check for Cyrillic characters (common in the spam messages seen in the screenshot)
   const cyrillicPattern = /[\u0400-\u04FF]/;
   if (cyrillicPattern.test(message)) return true;
 
-  // Simple heuristic: Excessive URLs in a short message
   const lowerMessage = message.toLowerCase();
   const urlCount = (lowerMessage.match(/https?:\/\//g) || []).length;
   if (urlCount > 2 || (urlCount > 0 && message.length < 100)) return true;
@@ -59,22 +45,6 @@ const escapeHtml = (unsafe: string) =>
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
-
-const parseBody = (req: RequestLike): ContactPayload & { _subject_line?: string } => {
-  if (!req.body) {
-    return {};
-  }
-
-  if (typeof req.body === "string") {
-    try {
-      return JSON.parse(req.body) as ContactPayload & { _subject_line?: string };
-    } catch {
-      return {};
-    }
-  }
-
-  return req.body as ContactPayload & { _subject_line?: string };
-};
 
 const formatSubmittedAt = () =>
   new Intl.DateTimeFormat("en-IN", {
@@ -144,7 +114,7 @@ const sendBrevoEmail = async (apiKey: string, payload: BrevoPayload) => {
   const brevoResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
     method: "POST",
     headers: {
-      "accept": "application/json",
+      accept: "application/json",
       "api-key": apiKey,
       "content-type": "application/json",
     },
@@ -157,9 +127,7 @@ const sendBrevoEmail = async (apiKey: string, payload: BrevoPayload) => {
   }
 };
 
-export default async function handler(req: RequestLike, res: ResponseLike) {
-  res.setHeader("Content-Type", "application/json");
-
+export default async function handler(req: NextApiRequest, res: NextApiResponse<JsonResponse>) {
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, message: "Method not allowed." });
   }
@@ -175,7 +143,7 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
     });
   }
 
-  const body = parseBody(req);
+  const body = (req.body || {}) as ContactPayload;
   const { name = "", email = "", message = "", website = "", _subject_line = "" } = body;
   const normalizedName = name.trim();
   const normalizedEmail = email.trim();
@@ -183,7 +151,6 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
   const honeypot1 = website.trim();
   const honeypot2 = _subject_line.trim();
 
-  // Bot trap: silently accept to avoid tipping off automated submitters.
   if (honeypot1 || honeypot2 || isSpamContent(normalizedMessage) || isSpamContent(normalizedName)) {
     return res.status(200).json({ success: true, message: "Message sent successfully." });
   }
@@ -204,7 +171,7 @@ export default async function handler(req: RequestLike, res: ResponseLike) {
     });
   }
 
-  const ipAddress = req.headers?.["x-forwarded-for"] ?? req.socket?.remoteAddress ?? "unknown";
+  const ipAddress = req.headers["x-forwarded-for"] ?? req.socket.remoteAddress ?? "unknown";
   const safeName = escapeHtml(normalizedName);
   const safeEmail = escapeHtml(normalizedEmail);
   const safeMessage = escapeHtml(normalizedMessage).replaceAll("\n", "<br />");
