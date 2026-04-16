@@ -94,10 +94,10 @@ const Contact = () => {
   const [loadTime] = useState(Date.now());
   const [errors, setErrors] = useState({ name: "", email: "", message: "", captcha: "" });
 
-  const contactEndpoint = import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact";
-  const brevoApiKey = import.meta.env.VITE_BREVO_API_KEY;
-  const brevoToEmail = import.meta.env.VITE_CONTACT_TO_EMAIL;
-  const brevoFromEmail = import.meta.env.VITE_CONTACT_FROM_EMAIL;
+  const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT || "/api/contact";
+  const brevoApiKey = process.env.NEXT_PUBLIC_BREVO_API_KEY;
+  const brevoToEmail = process.env.NEXT_PUBLIC_CONTACT_TO_EMAIL;
+  const brevoFromEmail = process.env.NEXT_PUBLIC_CONTACT_FROM_EMAIL;
 
   useEffect(() => {
     const num1 = Math.floor(Math.random() * 10) + 1;
@@ -289,7 +289,7 @@ const Contact = () => {
 
         if (!isJson) {
           throw new Error(
-            "Contact API is unavailable. Set VITE_BREVO_API_KEY for React-only mode, or run a serverless endpoint.",
+            "Contact API is unavailable. Set NEXT_PUBLIC_BREVO_API_KEY for client mode, or run a serverless endpoint.",
           );
         }
 

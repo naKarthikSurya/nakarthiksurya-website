@@ -1,13 +1,14 @@
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import Seo from "@/components/Seo";
 
 const NotFound = () => {
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = router.asPath.split("?")[0];
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    console.error("404 Error: User attempted to access non-existent route:", pathname);
+  }, [pathname]);
 
   return (
     <>

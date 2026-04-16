@@ -13,13 +13,13 @@ Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 - **Interactive Progress & Experience**: Dynamic timeline and skill visualizations using Framer Motion.
 - **Dual-Mode Contact System**: Integrated contact form with support for both client-side Brevo direct send and serverless API modes.
 - **Advanced SEO Engine**: Custom-built SEO component managing JSON-LD, Meta tags, OpenGraph, and Twitter Cards per route.
-- **Performance Optimized**: Built on Vite with React 18, utilizing SSG/SSR patterns where applicable.
+- **Performance Optimized**: Built on Next.js with React 18 and server-rendering support.
 - **Responsive & Accessible**: Fully optimized for mobile, tablet, and desktop viewing with accessibility best practices.
 
 ## 🛠️ Tech Stack
 
 ### Core
-- **Framework**: [React 18](https://reactjs.org/) (Vite-powered)
+- **Framework**: [Next.js](https://nextjs.org/) (React 18)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
@@ -30,23 +30,24 @@ Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 - **Deployment**: Vercel (recommended) / Static Hosting
 
 ### Tooling
-- **Bundler**: Vite 5
+- **Framework Runtime**: Next.js
 - **Linting**: ESLint + Prettier
 - **Testing**: Vitest + Testing Library
 
 ## 📂 Project Structure
 
 ```text
-├── api/             # Serverless backend functions (Contact API)
+├── pages/           # Next.js route files and API routes
+│   └── api/         # Serverless backend functions (Contact API)
 ├── public/          # Static assets (robots.txt, profile images, resume PDF)
 ├── src/
 │   ├── components/  # Reusable UI components (Navbar, Footer, SEO, etc.)
 │   │   └── ui/      # shadcn/ui components
 │   ├── config/      # Global site configuration (SEO constants)
-│   ├── pages/       # Main route components (Index, About, Experience, Projects)
-│   ├── App.tsx      # Routing and application entry
-│   └── main.tsx     # React DOM initialization
+│   ├── pages/       # Route view components rendered by /pages/*
+│   └── lib/         # Shared client utilities (analytics)
 ├── .env.example     # Template for environment variables
+├── next.config.mjs  # Next.js runtime config
 └── tailwind.config.ts # Custom theme and brutalist design tokens
 ```
 
@@ -77,7 +78,7 @@ Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 
 The contact system (found in `src/pages/Contact.tsx`) is designed for flexibility:
 
-- **Client-Side Mode**: If `VITE_BREVO_API_KEY` is provided, the frontend will send emails directly. *Note: Use with caution in public repos.*
+- **Client-Side Mode**: If `NEXT_PUBLIC_BREVO_API_KEY` is provided, the frontend will send emails directly. *Note: Use with caution in public repos.*
 - **API Mode**: For better security, keep the key server-side and the frontend will attempt to call `/api/contact`.
 
 ## 📄 License
