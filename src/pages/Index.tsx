@@ -128,7 +128,7 @@ const Index = () => {
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="font-display text-4xl md:text-5xl mb-6">
-              EXPERT AI DEVELOPER & FULL-STACK ENGINEER EXPERTISE<span className="text-primary">.</span>
+              AI DEVELOPER & SOFTWARE ENGINEER PORTFOLIO<span className="text-primary">.</span>
             </h2>
             <div className="font-body text-base text-foreground/80 leading-relaxed font-normal space-y-6">
               <p>

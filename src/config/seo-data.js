@@ -1,14 +1,15 @@
 export const siteConfig = {
   siteUrl: "https://www.nakarthiksurya.com",
   siteName: "Karthik Surya",
+  alternateNames: ["Karthik Surya AI", "nakarthiksurya.com", "Karthik Surya Portfolio"],
   author: "Karthik Surya",
   jobTitle: "Software Engineer & AI Developer",
   employer: "Class One Exchange (C1X)",
-  defaultTitle: "Karthik Surya — AI Engineer & Software Engineer",
+  defaultTitle: "Karthik Surya | AI Developer, RAG Engineer, Backend Builder",
   defaultDescription:
-    "Software engineer building AI agents and RAG systems. Projects, resume, and contact. Based in Chennai, India.",
+    "Portfolio of Karthik Surya, a software engineer building RAG systems, AI agents, FastAPI backends, and applied ML projects.",
   defaultKeywords:
-    "Karthik Surya, AI engineer, software engineer, RAG engineer, AI agents, multi-agent systems, generative AI, Chennai India",
+    "Karthik Surya, AI developer, software engineer, RAG engineer, AI agents, multi-agent systems, generative AI, Chennai India",
   defaultOgImage: "/profile.jpg",
   defaultOgImageAlt:
     "Karthik Surya - Software Engineer and AI Developer Portfolio",
@@ -26,35 +27,37 @@ export const siteConfig = {
   addressCountry: "IN",
   twitterHandle: "@nakarthiksurya",
   resumePath: "/suryaresume.pdf",
+  lastUpdated: new Date().toISOString(),
   sameAs: [
     "https://github.com/nakarthiksurya",
     "https://linkedin.com/in/karthiksurya-na",
     "https://x.com/nakarthiksurya",
     "https://youtube.com/@nakarthiksurya-ks",
-  ],
-  lastUpdated: "2026-03-08",
+  ]
 };
+
 
 export const routeSeo = {
   "/": {
+    title: "Karthik Surya | AI Developer, RAG Engineer, Backend Builder",
     description:
-      "Software engineer building AI agents and RAG systems. Projects, resume, and contact. Based in Chennai, India.",
+      "Portfolio of Karthik Surya, a software engineer building RAG systems, AI agents, FastAPI backends, and applied ML projects. Based in Chennai, India.",
     keywords:
       "Karthik Surya, AI engineer, software engineer, RAG engineer, AI agents, multi-agent systems, Chennai India",
     ogType: "website",
     schemaType: "WebPage",
   },
   "/about": {
-    title: "About Karthik Surya | Software Engineer",
+    title: "About Karthik Surya | AI Developer and Software Engineer",
     description:
-      "Learn about Karthik Surya's journey in AI, his engineering work at C1X, and his focus on scalable AI agents, RAG, and NLP systems.",
+      "Learn about Karthik Surya's journey in AI systems, backend engineering, FastAPI, RAG, and production-focused experimentation.",
     keywords:
       "About Karthik Surya, AI engineer India, software engineer Chennai, C1X engineer, artificial intelligence portfolio",
     ogType: "profile",
     schemaType: "ProfilePage",
   },
   "/experience": {
-    title: "Professional Experience",
+    title: "Professional Experience | AI & Software Engineering",
     description:
       "Review Karthik Surya's experience building intelligent agents, RAG pipelines, and production AI tools at C1X and in previous internships.",
     keywords:
@@ -63,9 +66,9 @@ export const routeSeo = {
     schemaType: "CollectionPage",
   },
   "/projects": {
-    title: "Portfolio Projects",
+    title: "AI Projects and Case Studies | Karthik Surya",
     description:
-      "Explore AI and software engineering projects by Karthik Surya, including legal AI assistants, RAG platforms, and computer vision apps.",
+      "Explore production launches, prototypes, and case studies across RAG, AI agents, FastAPI, and computer vision by Karthik Surya.",
     keywords:
       "Karthik Surya projects, AI projects portfolio, legal AI, RAG projects, computer vision portfolio, software engineering projects",
     ogType: "website",
@@ -78,9 +81,9 @@ export const routeSeo = {
     ],
   },
   "/contact": {
-    title: "Contact Karthik Surya — AI Engineer & Software Engineer",
+    title: "Contact Karthik Surya | AI and Backend Collaboration",
     description:
-      "Contact Karthik Surya for AI engineering roles, consulting, and collaboration. Fast response via email.",
+      "Get in touch with Karthik Surya about AI systems, RAG pipelines, FastAPI backends, applied ML projects, or consulting opportunities.",
     keywords:
       "Contact Karthik Surya, hire AI developer, software engineer contact, AI consultant India, collaboration with Karthik Surya",
     ogType: "website",
@@ -92,6 +95,27 @@ export const routeSeo = {
       "View or download the resume of Karthik Surya, a software engineer and AI developer specializing in agentic AI, RAG, and product engineering.",
     keywords:
       "Karthik Surya resume, AI developer resume, software engineer CV, RAG engineer resume, AI portfolio PDF",
+    ogType: "website",
+    schemaType: "ProfilePage",
+  },
+  "/publications": {
+    title: "Research Publications | Karthik Surya — AI Engineer",
+    description: "Scholarly publications by Karthik Surya focusing on Transformer-based frameworks and intelligent information retrieval.",
+    keywords: "Karthik Surya publications, legal information retrieval, transformer framework, AI research",
+    ogType: "article",
+    schemaType: "CollectionPage",
+  },
+  "/certifications": {
+    title: "Professional Certifications | Karthik Surya",
+    description: "Industry-recognized certifications in Generative AI, Cybersecurity, and Software Engineering held by Karthik Surya.",
+    keywords: "Karthik Surya certifications, Google Cloud Generative AI, Cybersecurity certification, software engineering credentials",
+    ogType: "website",
+    schemaType: "CollectionPage",
+  },
+  "/education": {
+    title: "Education and Academic Background | Karthik Surya",
+    description: "Academic journey and B.Tech in Artificial Intelligence and Data Science from Panimalar Institute of Technology.",
+    keywords: "Karthik Surya education, Panimalar Institute of Technology, B.Tech AI and Data Science",
     ogType: "website",
     schemaType: "ProfilePage",
   },
@@ -119,5 +143,11 @@ export const getCanonicalUrl = (pathname = "/") => {
     return `${siteConfig.siteUrl}/`;
   }
 
-  return `${siteConfig.siteUrl}${pathname}`;
+  // Ensure leading slash and remove trailing slash for consistency
+  const cleanPath = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  const finalPath = cleanPath.endsWith("/") && cleanPath.length > 1 
+    ? cleanPath.slice(0, -1) 
+    : cleanPath;
+
+  return `${siteConfig.siteUrl}${finalPath}`;
 };
