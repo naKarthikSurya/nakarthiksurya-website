@@ -19,17 +19,20 @@ Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 ## 🛠️ Tech Stack
 
 ### Core
+
 - **Framework**: [Next.js](https://nextjs.org/) (React 18)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 
 ### Services & Integrations
+
 - **Email**: [Brevo (formerly Sendinblue)](https://www.brevo.com/) Transactional API
 - **SEO**: React Helmet Async + Custom Config
 - **Deployment**: Vercel (recommended) / Static Hosting
 
 ### Tooling
+
 - **Framework Runtime**: Next.js
 - **Linting**: ESLint + Prettier
 - **Testing**: Vitest + Testing Library
@@ -54,22 +57,28 @@ Live at: [nakarthiksurya.com](https://nakarthiksurya.com)
 ## ⚙️ Local Development
 
 ### Prerequisites
+
 - Node.js (Latest LTS)
 - npm or bun
 
 ### Setup
+
 1. Clone the repository
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Create a `.env` file based on `.env.example` and add your Brevo API keys.
 4. Start the development server:
+
    ```bash
    npm run dev
    ```
 
 ### Quality Control
+
 - **Lint**: `npm run lint`
 - **Test**: `npm run test`
 - **Build**: `npm run build`
